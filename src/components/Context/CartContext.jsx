@@ -1,0 +1,78 @@
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import axios from "axios";
+
+const CartContext = createContext(null);
+const API = "http://localhost:3000/api";
+
+export function CartProvider({ children }) {
+  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+
+  const token = useMemo(() => localStorage.getItem("token"), []);
+
+  const auth = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+  const fetchCart = async () => {
+    if (!token) {
+      setCartItems([]);
+      setCartCount(0);
+      return;
+    }
+    try {
+      const res = await axios.get(`${API}/cart`, auth);
+      const items = res.data?.items || []; // ✅ handles empty cart
+      setCartItems(items);
+      setCartCount(items.length);
+    } catch (e) {
+      console.error("fetchCart failed:", e);
+    }
+  };
+
+  const addToCart = async ({
+    productId,
+    quantity = 1,
+    size,
+    color,
+    customText = "",
+    customImage = "",
+  }) => {
+    if (!token) throw new Error("Not logged in");
+    await axios.post(
+      `${API}/cart/add`,
+      { productId, quantity, size, color, customText, customImage },
+      auth
+    );
+    fetchCart(); // sync after add
+  };
+
+  const updateQuantity = async (cartItemId, quantity) => {
+    if (!token) return;
+    await axios.patch(`${API}/cart/${cartItemId}`, { quantity }, auth); // ✅ fixed URL
+    fetchCart(); // refresh after update
+  };
+
+  const removeFromCart = async (cartItemId) => {
+    if (!token) return;
+    await axios.delete(`${API}/cart/${cartItemId}`, auth); // ✅ fixed URL
+    fetchCart(); // refresh after delete
+  };
+
+  useEffect(() => {
+    fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  const value = {
+    cartItems,
+    cartCount,
+    setCartCount,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    fetchCart,
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+}
+
+export const useCart = () => useContext(CartContext);
