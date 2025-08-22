@@ -188,7 +188,7 @@ export default function Products() {
               key={p._id}
               className="bg-gradient-to-r from-fuchsia-500 via-orange-400 to-yellow-400 rounded-xl p-1 shadow-lg transform transition duration-200 hover:scale-[1.04] hover:shadow-2xl"
             >
-              <div className="bg-white rounded-lg p-4 h-full flex flex-col">
+              <div className="bg-amber-50 rounded-lg p-4 h-full flex flex-col">
                 <div className="relative">
                   <img
                     src={p.imageUrl}

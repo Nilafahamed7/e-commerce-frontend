@@ -18,7 +18,7 @@ export default function Orders() {
   if (!orders) return <div className="p-10">Loading...</div>;
 
   return (
-    <div className="max-w-5xl h-screen mx-auto px-4 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 py-24">
+    <div className="max-w-5xl mx-auto px-4 py-24">
       <h1 className="text-2xl font-bold mb-4">My Orders</h1>
       {orders.length === 0 ? (
         <p>No orders yet.</p>

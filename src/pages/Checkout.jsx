@@ -8,6 +8,7 @@
 //     const [address, setAddress] = useState("");
 //     const [email, setEmail] = useState("");
 //     const [landmark, setLandmark] = useState("");
+//     const [stateField, setStateField] = useState(""); // ✅ added state
 //     const [postalCode, setPostalCode] = useState("");
 //     const [paymentMethod, setPaymentMethod] = useState("cod"); // default COD
 
@@ -31,61 +32,37 @@
 //           }, 0)
 //         : 0;
 
-//     // // COD → simple order placement
-//     // const handleCOD = async () => {
-//     //     try {
-//     //         const token = localStorage.getItem("token");
-//     //         await axios.post(
-//     //             "http://localhost:3000/api/orders",
-//     //             {
-//     //                 name,
-//     //                 phone,
-//     //                 address,
-//     //                 paymentMethod: "COD",
-//     //                 items: cart.items,
-//     //                 total,
-//     //             },
-//     //             { headers: { Authorization: `Bearer ${token}` } }
-//     //         );
-//     //         alert("Order placed successfully ✅ (Cash on Delivery)");
-//     //     } catch (err) {
-//     //         console.error(err);
-//     //         alert("Failed to place COD order ❌");
-//     //     }
-//     // };
-
 //     const handleCOD = async () => {
-//   try {
-//     const token = localStorage.getItem("token");
+//         try {
+//             const token = localStorage.getItem("token");
 
-//     await axios.post(
-//       "http://localhost:3000/api/orders",
-//       {
-//         products: cart.items.map((item) => ({
-//           productId: item.product._id || item.productId,
-//           quantity: item.quantity,
-//         })),
-//         shippingAddress: {
-//           fullName: name,   
-//           phone: phone,     
-//           address,
-//           city: landmark || "N/A",
-//           postalCode,
-//           country: "India",
-//         },
-//         paymentMethod: "COD",
-//       },
-//       { headers: { Authorization: `Bearer ${token}` } }
-//     );
+//             await axios.post(
+//                 "http://localhost:3000/api/orders",
+//                 {
+//                     products: cart.items.map((item) => ({
+//                         productId: item.product._id || item.productId,
+//                         quantity: item.quantity,
+//                     })),
+//                     shippingAddress: {
+//                         fullName: name,
+//                         phone: phone,
+//                         address,
+//                         city: landmark || "N/A",
+//                         state: stateField, // ✅ required field
+//                         postalCode,
+//                         country: "India",
+//                     },
+//                     paymentMethod: "COD",
+//                 },
+//                 { headers: { Authorization: `Bearer ${token}` } }
+//             );
 
-//     alert("Order placed successfully ✅ (Cash on Delivery)");
-//   } catch (err) {
-//     console.error("COD Order Error:", err.response?.data || err.message);
-//     alert("Failed to place COD order ❌");
-//   }
-// };
-
-
+//             alert("Order placed successfully ✅ (Cash on Delivery)");
+//         } catch (err) {
+//             console.error("COD Order Error:", err.response?.data || err.message);
+//             alert("Failed to place COD order ❌");
+//         }
+//     };
 
 //     // Razorpay → for Card & UPI
 //     const handleRazorpay = async () => {
@@ -107,7 +84,6 @@
 //                 description: "Order Payment",
 //                 order_id,
 //                 handler: async function (response) {
-//                     // Verify payment in backend
 //                     await axios.post(
 //                         "http://localhost:3000/api/verify-payment",
 //                         {
@@ -144,7 +120,7 @@
 //     };
 
 //     const handlePlaceOrder = () => {
-//         if (!name || !phone || !address) {
+//         if (!name || !phone || !address || !stateField || !postalCode) {
 //             alert("Please fill all address fields");
 //             return;
 //         }
@@ -154,16 +130,24 @@
 //         } else {
 //             handleRazorpay();
 //         }
+
+//         setName("");
+//         setPhone("");
+//         setEmail("")
+//         setAddress("");
+//         setLandmark("")
+//         setStateField("");
+//         setPostalCode("");
+//         setPaymentMethod("cod");
+//         setCart(null)
 //     };
 
 //     if (!cart) return <div className="p-10">Loading...</div>;
 
 //     return (
 //         <div className="max-w-6xl mx-auto px-4 mt-6 py-18 grid grid-cols-1 md:grid-cols-3 gap-10 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
-
 //             {/* Left: Address & Payment */}
 //             <div className="md:col-span-2 space-y-8">
-
 //                 {/* Shipping Address */}
 //                 <div className="bg-white p-6 rounded-xl shadow">
 //                     <h2 className="text-2xl font-bold mb-4 text-gray-800">
@@ -207,6 +191,13 @@
 //                         />
 //                         <input
 //                             type="text"
+//                             placeholder="State" // ✅ added state input
+//                             value={stateField}
+//                             onChange={(e) => setStateField(e.target.value)}
+//                             className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-indigo-200"
+//                         />
+//                         <input
+//                             type="text"
 //                             placeholder="Postal Code"
 //                             value={postalCode}
 //                             onChange={(e) => setPostalCode(e.target.value)}
@@ -220,9 +211,7 @@
 //                     <h2 className="text-2xl font-bold mb-4 text-gray-800">
 //                         Payment Method
 //                     </h2>
-
 //                     <div className="space-y-3">
-//                         {/* COD */}
 //                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
 //                             <input
 //                                 type="radio"
@@ -233,8 +222,6 @@
 //                             />
 //                             <span className="font-medium">Cash on Delivery</span>
 //                         </label>
-
-//                         {/* Card */}
 //                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
 //                             <input
 //                                 type="radio"
@@ -245,8 +232,6 @@
 //                             />
 //                             <span className="font-medium">Credit / Debit Card</span>
 //                         </label>
-
-//                         {/* UPI */}
 //                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
 //                             <input
 //                                 type="radio"
@@ -272,8 +257,10 @@
 //                         const qty = Number(item.quantity) || 1;
 //                         const rawSrc = product.imageUrl || "";
 //                         const src = rawSrc
-//                           ? (rawSrc.startsWith("http") ? rawSrc : `http://localhost:3000${rawSrc}`)
-//                           : "/placeholder.svg";
+//                             ? rawSrc.startsWith("http")
+//                                 ? rawSrc
+//                                 : `http://localhost:3000${rawSrc}`
+//                             : "/placeholder.svg";
 //                         return (
 //                             <div key={item._id} className="flex gap-3 items-center">
 //                                 <img
@@ -281,8 +268,8 @@
 //                                     alt={name}
 //                                     className="w-16 h-16 rounded-md object-cover"
 //                                     onError={(e) => {
-//                                       if (e.currentTarget.src.endsWith('/placeholder.svg')) return;
-//                                       e.currentTarget.src = '/placeholder.svg';
+//                                         if (e.currentTarget.src.endsWith("/placeholder.svg")) return;
+//                                         e.currentTarget.src = "/placeholder.svg";
 //                                     }}
 //                                 />
 //                                 <div className="flex-1">
@@ -319,17 +306,21 @@ export default function Checkout() {
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
     const [landmark, setLandmark] = useState("");
-    const [stateField, setStateField] = useState(""); // ✅ added state
+    const [stateField, setStateField] = useState(""); 
     const [postalCode, setPostalCode] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("cod"); // default COD
+    const [paymentMethod, setPaymentMethod] = useState("cod"); 
 
     useEffect(() => {
         const fetchCart = async () => {
-            const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:3000/api/cart", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setCart(res.data);
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get("http://localhost:3000/api/cart", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setCart(res.data);
+            } catch (err) {
+                console.error("Cart fetch error:", err.response?.data || err.message);
+            }
         };
         fetchCart();
     }, []);
@@ -347,35 +338,37 @@ export default function Checkout() {
         try {
             const token = localStorage.getItem("token");
 
-            await axios.post(
+            const res = await axios.post(
                 "http://localhost:3000/api/orders",
                 {
                     products: cart.items.map((item) => ({
-                        productId: item.product._id || item.productId,
+                        productId: item.product?._id || item.productId,
                         quantity: item.quantity,
                     })),
                     shippingAddress: {
                         fullName: name,
                         phone: phone,
+                        email: email || "N/A",   // ✅ added fallback email
                         address,
                         city: landmark || "N/A",
-                        state: stateField, // ✅ required field
+                        state: stateField,
                         postalCode,
                         country: "India",
                     },
                     paymentMethod: "COD",
+                    totalPrice: total,   // ✅ backend usually expects this
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
             alert("Order placed successfully ✅ (Cash on Delivery)");
+            console.log("Order response:", res.data);
         } catch (err) {
             console.error("COD Order Error:", err.response?.data || err.message);
-            alert("Failed to place COD order ❌");
+            alert("Failed to place COD order ❌ (check console for details)");
         }
     };
 
-    // Razorpay → for Card & UPI
     const handleRazorpay = async () => {
         try {
             const token = localStorage.getItem("token");
@@ -388,7 +381,7 @@ export default function Checkout() {
             const { id: order_id, currency, amount } = res.data;
 
             const options = {
-                key: "YOUR_RAZORPAY_KEY_ID", // replace with your key
+                key: "YOUR_RAZORPAY_KEY_ID", 
                 amount,
                 currency,
                 name: "My Store",
@@ -425,7 +418,7 @@ export default function Checkout() {
             const rzp = new window.Razorpay(options);
             rzp.open();
         } catch (err) {
-            console.error(err);
+            console.error("Razorpay Error:", err.response?.data || err.message);
             alert("Payment initialization failed ❌");
         }
     };
@@ -444,13 +437,13 @@ export default function Checkout() {
 
         setName("");
         setPhone("");
-        setEmail("")
+        setEmail("");
         setAddress("");
-        setLandmark("")
+        setLandmark("");
         setStateField("");
         setPostalCode("");
         setPaymentMethod("cod");
-        setCart(null)
+        setCart(null);
     };
 
     if (!cart) return <div className="p-10">Loading...</div>;
@@ -502,7 +495,7 @@ export default function Checkout() {
                         />
                         <input
                             type="text"
-                            placeholder="State" // ✅ added state input
+                            placeholder="State"
                             value={stateField}
                             onChange={(e) => setStateField(e.target.value)}
                             className="w-full px-4 py-2 border rounded-md focus:ring focus:ring-indigo-200"
@@ -598,7 +591,7 @@ export default function Checkout() {
                 </div>
                 <button
                     onClick={handlePlaceOrder}
-                    className="w-full mt-6 px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+                    className="w-full mt-6 px-6 py-3 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition"
                 >
                     Place Order
                 </button>

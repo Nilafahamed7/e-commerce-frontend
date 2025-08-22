@@ -18,10 +18,10 @@ export default function Account() {
   }, []);
 
   return (
-    <div className="max-w-4xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 h-screen mx-auto px-4 py-24">
+    <div className="max-w-4xl mx-auto px-4 py-24">
       <h1 className="text-2xl font-bold mb-4">Account Details</h1>
       {user ? (
-        <div className="bg-amber-50 rounded-lg shadow p-4">
+        <div className="bg-white rounded-lg shadow p-4">
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
         </div>

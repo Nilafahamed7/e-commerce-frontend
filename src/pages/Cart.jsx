@@ -182,7 +182,7 @@ export default function Cart() {
             </div>
 
             <button
-              className="mt-6 w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-800"
+              className="mt-6 w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700"
               onClick={() => navigate("/checkout")}
             >
               Checkout
