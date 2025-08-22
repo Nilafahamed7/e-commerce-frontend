@@ -76,7 +76,7 @@ export default function Products() {
   };
 
   return (
-    <div className="w-full mx-auto px-4 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
+    <div className="w-full h-full mx-auto px-4 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Products</h1>
 
       {/* Search */}
