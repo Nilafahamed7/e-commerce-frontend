@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { useWishlist } from "../components/Context/WishlistContext";
 import { useCart } from "../components/Context/CartContext"; // import cart context
 
 export default function Products() {
@@ -18,6 +20,7 @@ export default function Products() {
   const [showFilters, setShowFilters] = useState(false);
 
   const { addToCart } = useCart(); // ✅ use context
+  const { toggle, isWished } = useWishlist();
 
   // fetch products
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function Products() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20">
+    <div className="w-full mx-auto px-4 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Products</h1>
 
       {/* Search */}
@@ -186,11 +189,21 @@ export default function Products() {
               className="bg-gradient-to-r from-fuchsia-500 via-orange-400 to-yellow-400 rounded-xl p-1 shadow-lg transform transition duration-200 hover:scale-[1.04] hover:shadow-2xl"
             >
               <div className="bg-white rounded-lg p-4 h-full flex flex-col">
-                <img
-                  src={p.imageUrl}
-                  alt={p.name}
-                  className="w-full h-40 object-cover rounded-md"
-                />
+                <div className="relative">
+                  <img
+                    src={p.imageUrl}
+                    alt={p.name}
+                    className="w-full h-40 object-cover rounded-md"
+                  />
+                  <button
+                    type="button"
+                    className={`absolute top-2 right-2 p-2 rounded-full ${isWished(p._id) ? "bg-pink-600 text-white" : "bg-white text-pink-600"}`}
+                    onClick={() => toggle(p)}
+                    aria-label="Toggle wishlist"
+                  >
+                    <FaHeart />
+                  </button>
+                </div>
                 <h3 className="mt-2 font-semibold text-gray-800">{p.name}</h3>
                 <p className="text-sm text-gray-500">
                   {p.description.slice(0, 40)}...

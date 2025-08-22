@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function UploadImage({ onUpload }) {
+export default function UploadImage({ onUpload, endpoint = "http://localhost:3000/api/products/upload-image" }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
 
@@ -27,11 +27,10 @@ export default function UploadImage({ onUpload }) {
     console.log("📤 Uploading file:", file);
 
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/products/upload-image",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const token = localStorage.getItem("token");
+      const headers = { "Content-Type": "multipart/form-data" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      const res = await axios.post(endpoint, formData, { headers });
 
       console.log("✅ Upload response:", res.data);
 

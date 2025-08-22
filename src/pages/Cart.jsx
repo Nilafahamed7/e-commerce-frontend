@@ -82,7 +82,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-24 px-4 md:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 pt-24 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <button
@@ -101,8 +101,11 @@ export default function Cart() {
               const key = item?._id || item?.id;
               const product = item?.product || item;
               const name = product?.name || "Product";
-              const image =
-                product?.imageUrl || product?.image || "/placeholder.png";
+              const image = (() => {
+                const src = product?.imageUrl || product?.image || "";
+                if (!src) return "/placeholder.svg";
+                return src.startsWith("http") ? src : `http://localhost:3000${src}`;
+              })();
               const price = product?.price ?? item?.price ?? 0;
               const size = item?.size;
               const color = item?.color;
@@ -113,12 +116,16 @@ export default function Cart() {
                   key={key}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center bg-white p-4 rounded-lg shadow-md"
+                  className="flex items-center bg-amber-50 p-4 rounded-lg shadow-md"
                 >
                   <img
                     src={image}
                     alt={name}
                     className="w-24 h-24 object-cover rounded-lg"
+                    onError={(e) => {
+                      if (e.currentTarget.src.endsWith('/placeholder.svg')) return;
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
                   />
 
                   <div className="ml-4 flex-1">
@@ -159,7 +166,7 @@ export default function Cart() {
           </div>
 
           {/* Summary */}
-          <div className="bg-white p-6 rounded-lg shadow-md h-fit">
+          <div className="bg-amber-50 p-6 rounded-lg shadow-md h-fit">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
@@ -174,7 +181,10 @@ export default function Cart() {
               <span>₹{total}</span>
             </div>
 
-            <button className="mt-6 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+            <button
+              className="mt-6 w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-800"
+              onClick={() => navigate("/checkout")}
+            >
               Checkout
             </button>
           </div>

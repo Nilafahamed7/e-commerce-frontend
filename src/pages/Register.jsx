@@ -24,8 +24,8 @@ export default function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="max-w-sm w-full bg-white p-6 rounded-lg shadow">
+    <div className="flex justify-center items-center bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 h-screen h-screen">
+      <div className="max-w-sm w-full bg-amber-50 p-6 rounded-lg shadow">
         <h2 className="text-xl font-semibold mb-4 text-center">Register</h2>
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
