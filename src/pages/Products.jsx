@@ -195,6 +195,7 @@ export default function Products() {
                     alt={p.name}
                     className="w-full h-40 object-cover rounded-md"
                   />
+
                   <button
                     type="button"
                     className={`absolute top-2 right-2 p-2 rounded-full ${isWished(p._id) ? "bg-pink-600 text-white" : "bg-white text-pink-600"}`}

@@ -177,7 +177,7 @@ export default function Checkout() {
     if (!cart) return <div className="p-10">Loading...</div>;
 
     return (
-        <div className="w-full h-screen mx-auto px-4 mt-6 py-18 grid grid-cols-1 md:grid-cols-3 gap-10  bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
+        <div className="w-full h-full mx-auto px-4 mt-6 py-18 grid grid-cols-1 md:grid-cols-3 gap-10  bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
             {/* Left: Address & Payment */}
             <div className="md:col-span-2 max-w-3xl space-y-8">
                 {/* Shipping Address */}
