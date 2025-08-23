@@ -12,7 +12,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/auth/register", {
+      await axios.post("https://e-commerce-backend-af5d.onrender.com/api/auth/register", {
         name,
         email,
         password,

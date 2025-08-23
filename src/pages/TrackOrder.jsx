@@ -11,7 +11,7 @@ export default function TrackOrder() {
     setOrder(null);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:3000/api/orders`, {
+      const res = await axios.get(`https://e-commerce-backend-af5d.onrender.com/api/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const found = (res.data || []).find((o) => o._id === id.trim());

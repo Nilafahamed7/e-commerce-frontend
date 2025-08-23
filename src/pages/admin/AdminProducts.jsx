@@ -8,7 +8,7 @@ export default function AdminProducts() {
   // Fetch products from backend
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/products");
+      const res = await fetch("https://e-commerce-backend-af5d.onrender.com/api/products");
       const data = await res.json();
       setProducts(data);
     } catch (err) {

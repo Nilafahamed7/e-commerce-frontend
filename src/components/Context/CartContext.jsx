@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 const CartContext = createContext(null);
-const API = "http://localhost:3000/api";
+const API = "https://e-commerce-backend-af5d.onrender.com/api";
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);

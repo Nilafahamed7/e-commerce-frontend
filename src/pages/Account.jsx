@@ -8,11 +8,11 @@ export default function Account() {
     const run = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/api/auth/me", {
+        const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
-      } catch {}
+      } catch{}
     };
     run();
   }, []);

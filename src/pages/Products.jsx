@@ -25,7 +25,7 @@ export default function Products() {
   // fetch products
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await axios.get("http://localhost:3000/api/products");
+      const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/products");
       setProducts(res.data);
       setFiltered(res.data);
     };

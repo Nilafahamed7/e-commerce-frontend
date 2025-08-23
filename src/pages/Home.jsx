@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/products");
+        const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/products");
         setProducts(res.data.slice(0, 4));
         setTrending(res.data.slice(4, 8)); // mock trending products
       } catch (err) {
