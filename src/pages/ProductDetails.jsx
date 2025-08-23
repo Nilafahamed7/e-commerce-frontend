@@ -57,7 +57,7 @@ export default function ProductDetails() {
   if (!product) return <div className="p-10">Loading...</div>;
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 mx-auto px-4 py-20">
+    <div className="w-full h-full bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 mx-auto px-4 py-20">
       <Link
         to="/products"
         className="mb-4 inline-block text-gray-600 hover:text-red-600 text-lg"
