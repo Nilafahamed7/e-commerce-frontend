@@ -9,24 +9,31 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.post("http://localhost:3000/api/auth/login", {
-      email,
-      password,
-    });
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:3000/api/auth/login", {
+        email,
+        password,
+      });
 
-    // Save token
-    localStorage.setItem("token", res.data.token);
+      // Save token
+      localStorage.setItem("token", res.data.token);
 
-    // ✅ Save full user object (including isAdmin)
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+      // ✅ Save full user object (including isAdmin)
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-    navigate("/");
-  } catch {
-    setError("Invalid credentials");
-  }
-};
+      // // Save full user object including token
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify({ ...res.data.user, token: res.data.token })
+      // );
+
+
+      navigate("/");
+    } catch {
+      setError("Invalid credentials");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen">

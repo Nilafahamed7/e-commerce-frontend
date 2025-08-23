@@ -16,6 +16,7 @@ import Help from "./pages/Help";
 import RefundPolicy from "./pages/RefundPolicy";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/track-order" element={<TrackOrder />} />
         <Route path="/help" element={<Help />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
       <ToastContainer position="top-right" />
     </BrowserRouter>

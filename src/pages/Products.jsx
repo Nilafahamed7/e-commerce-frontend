@@ -90,7 +90,7 @@ export default function Products() {
         />
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="px-4 py-2 rounded-md bg-indigo-600 text-white"
+          className="px-4 py-2 rounded-md bg-orange-600 text-white"
         >
           {showFilters ? "Hide Filters" : "Filters"}
         </button>
@@ -182,7 +182,7 @@ export default function Products() {
         )}
 
         {/* PRODUCT GRID */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="flex-1  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filtered.map((p) => (
             <div
               key={p._id}
