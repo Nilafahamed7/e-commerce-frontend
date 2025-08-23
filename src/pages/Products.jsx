@@ -99,7 +99,7 @@ export default function Products() {
       <div className="flex flex-col md:flex-row gap-6">
         {/* FILTER SIDEBAR */}
         {showFilters && (
-          <div className="w-full md:w-52 p-3 rounded-lg bg-gradient-to-br from-fuchsia-300 via-orange-200 to-yellow-200 shadow text-sm space-y-4 relative">
+          <div className="w-full md:w-52 p-3 rounded-lg bg-gradient-to-tr from-amber-300 via-orange-100 to-yellow-500 shadow text-sm space-y-4 relative">
             {/* Close Button */}
             <button
               onClick={() => setShowFilters(false)}

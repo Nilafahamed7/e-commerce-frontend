@@ -13,11 +13,11 @@ export default function OrderSuccess() {
   }, [location]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 p-6">
       {/* Success icon */}
-      <div className="bg-green-100 p-6 rounded-full mb-6 animate-bounce">
+      <div className="bg-green-200 p-6 rounded-full mb-6 animate-bounce">
         <svg
-          className="w-16 h-16 text-green-600"
+          className="w-16 h-16 text-green-700"
           fill="none"
           stroke="currentColor"
           strokeWidth="3"
@@ -50,13 +50,13 @@ export default function OrderSuccess() {
       <div className="flex gap-4">
         <Link
           to="/"
-          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-indigo-700"
         >
           Continue Shopping
         </Link>
         <Link
-          to="/my-orders"
-          className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+          to="/orders"
+          className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-300"
         >
           View My Orders
         </Link>

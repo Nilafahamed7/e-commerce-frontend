@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
+import Footer from "../components/Footer";
 import {
   FaLock,
   FaTruck,
@@ -344,8 +345,8 @@ export default function Home() {
           </div>
         ))}
       </div>
-
-      {/* FOOTER */}
+{/* 
+      FOOTER
       <footer className="w-full bg-orange-700 text-gray-300 py-8">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-amber-50">
@@ -407,7 +408,8 @@ export default function Home() {
         <div className="mt-6 text-center text-xs text-amber-50">
           © {new Date().getFullYear()} DesignMyFit. All Rights Reserved.
         </div>
-      </footer>
-    </div>
+      </footer> */}
+      <Footer></Footer>
+    </div> 
   );
 }

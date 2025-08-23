@@ -23,11 +23,11 @@ export default function TrackOrder() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-24">
+    <div className="w-full h-screen mx-auto px-4 py-24 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       <h1 className="text-2xl font-bold mb-4">Track Order</h1>
       <div className="flex gap-2">
         <input className="border rounded px-3 py-2 flex-1" placeholder="Enter Order ID" value={id} onChange={(e)=>setId(e.target.value)} />
-        <button className="px-4 py-2 bg-indigo-600 text-white rounded" onClick={handleSearch}>Search</button>
+        <button className="px-4 py-2 bg-orange-600 text-white rounded" onClick={handleSearch}>Search</button>
       </div>
       {error && <p className="text-red-600 mt-3">{error}</p>}
       {order && (

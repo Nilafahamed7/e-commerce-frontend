@@ -17,6 +17,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import OrderSuccess from "./pages/OrderSuccess";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/help" element={<Help />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/order-success" element={<OrderSuccess/>}></Route>
       </Routes>
       <ToastContainer position="top-right" />
     </BrowserRouter>
