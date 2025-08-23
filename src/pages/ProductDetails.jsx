@@ -57,7 +57,7 @@ export default function ProductDetails() {
   if (!product) return <div className="p-10">Loading...</div>;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-20">
+    <div className="w-full h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 mx-auto px-4 py-20">
       <Link
         to="/products"
         className="mb-4 inline-block text-gray-600 hover:text-red-600 text-lg"
@@ -152,7 +152,7 @@ export default function ProductDetails() {
 
           <button
             onClick={handleAddToCart}
-            className="mt-6 w-full bg-indigo-600 text-white py-3 rounded hover:bg-indigo-700"
+            className="mt-6 w-full bg-orange-600 text-white py-3 rounded hover:bg-indigo-700"
           >
             Add to Cart
           </button>

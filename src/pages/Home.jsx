@@ -4,14 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
 import Footer from "../components/Footer";
-import {
-  FaLock,
-  FaTruck,
-  FaUndo,
-  FaInstagram,
-  FaFacebook,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaLock, FaTruck, FaUndo } from "react-icons/fa";
 
 import promo from "../assets/promo-video.mp4";
 import hero from "../assets/hero.jpg";
@@ -27,7 +20,9 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/products");
+        const res = await axios.get(
+          "https://e-commerce-backend-af5d.onrender.com/api/products"
+        );
         setProducts(res.data.slice(0, 4));
         setTrending(res.data.slice(4, 8)); // mock trending products
       } catch (err) {
@@ -37,41 +32,50 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  // ✅ Review Carousel Settings
+  // ✅ Mobile-first Review Carousel Settings
   const reviewSettings = {
     dots: true,
     infinite: true,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000,
     speed: 600,
-    slidesToShow: 3,
+    cssEase: "ease-in-out",
+    pauseOnHover: true,
+    arrows: false,
+    slidesToShow: 1, // default = mobile
     slidesToScroll: 1,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      {
+        breakpoint: 768, // tablets
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 1200, // desktops
+        settings: { slidesToShow: 3 },
+      },
     ],
   };
 
   return (
     <div className="bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       {/* HERO */}
-      <section className="relative mt-6 max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+      <section className="relative mt-6 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 grid md:grid-cols-2 gap-10 items-center">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
           className="text-left"
         >
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
             Elevate Your Style
           </h1>
-          <p className="mt-4 text-lg text-gray-700">
+          <p className="mt-4 text-base sm:text-lg text-gray-700">
             Premium clothing for every occasion — designed with comfort &
             luxury.
           </p>
           <Link
             to="/products"
-            className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-semibold rounded-full shadow-lg hover:scale-105 transform transition"
+            className="inline-block mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-semibold rounded-full shadow-lg hover:scale-105 transform transition"
           >
             Shop Now
           </Link>
@@ -84,7 +88,7 @@ export default function Home() {
           <img
             src={hero}
             alt="Hero fashion"
-            className="rounded-2xl shadow-2xl"
+            className="rounded-2xl shadow-2xl w-full h-auto object-cover"
           />
         </motion.div>
       </section>
@@ -95,28 +99,28 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
         viewport={{ once: true }}
-        className="relative w-full bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 text-white text-center py-16"
+        className="relative w-full bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 text-white text-center py-12 sm:py-16 px-4"
       >
-        <h2 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg animate-pulse">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold drop-shadow-lg animate-pulse">
           ⚡ Mega Sale - 30% OFF
         </h2>
-        <p className="mt-3 text-lg text-amber-100">
+        <p className="mt-3 text-base sm:text-lg text-amber-100">
           Upgrade your wardrobe with premium styles today
         </p>
         <Link
           to="/products"
-          className="inline-block mt-6 px-10 py-4 bg-white/90 text-orange-700 font-semibold rounded-full shadow-xl hover:scale-110 hover:bg-white transition transform"
+          className="inline-block mt-6 px-8 sm:px-10 py-3 sm:py-4 bg-white/90 text-orange-700 font-semibold rounded-full shadow-xl hover:scale-110 hover:bg-white transition transform"
         >
           Grab the Deal →
         </Link>
       </motion.div>
 
       {/* PROMO VIDEO */}
-      <div className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-4xl font-extrabold text-gray-900 mb-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
           🎬 Fashion Promo
         </h2>
-        <p className="text-gray-600 mb-10">
+        <p className="text-gray-600 mb-6 sm:mb-10 text-sm sm:text-base">
           Step into the world of style — watch our latest fashion film.
         </p>
         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
@@ -126,7 +130,7 @@ export default function Home() {
             muted
             loop
             playsInline
-            className="w-full h-64 md:h-[400px] rounded-xl object-cover"
+            className="w-full h-56 sm:h-64 md:h-[400px] rounded-xl object-cover"
           >
             Your browser does not support the video tag.
           </video>
@@ -134,11 +138,11 @@ export default function Home() {
       </div>
 
       {/* FEATURED PRODUCTS */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
           Featured Products
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {products.map((product) => (
             <motion.div
               key={product._id}
@@ -148,13 +152,17 @@ export default function Home() {
               <img
                 src={product.imageUrl}
                 alt={product.name}
-                className="h-56 w-full object-cover rounded-md"
+                className="h-48 sm:h-56 w-full object-cover rounded-md"
               />
-              <h3 className="mt-4 text-lg font-semibold">{product.name}</h3>
-              <p className="text-gray-700 font-medium">₹{product.price}</p>
+              <h3 className="mt-3 sm:mt-4 text-base sm:text-lg font-semibold">
+                {product.name}
+              </h3>
+              <p className="text-gray-700 font-medium text-sm sm:text-base">
+                ₹{product.price}
+              </p>
               <Link
                 to={`/products/${product._id}`}
-                className="inline-block mt-3 text-orange-600 hover:underline"
+                className="inline-block mt-2 sm:mt-3 text-orange-600 hover:underline text-sm sm:text-base"
               >
                 View Details
               </Link>
@@ -164,11 +172,11 @@ export default function Home() {
       </section>
 
       {/* TRENDING PRODUCTS */}
-      <section className="max-w-6xl mx-auto px-6 py-20  rounded-2xl shadow-inner">
-        <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 rounded-2xl shadow-inner">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
           🔥 Trending Now
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {trending.map((product) => (
             <motion.div
               key={product._id}
@@ -178,13 +186,17 @@ export default function Home() {
               <img
                 src={product.imageUrl}
                 alt={product.name}
-                className="h-56 w-full object-cover rounded-md"
+                className="h-48 sm:h-56 w-full object-cover rounded-md"
               />
-              <h3 className="mt-4 text-lg font-semibold">{product.name}</h3>
-              <p className="text-gray-700 font-medium">₹{product.price}</p>
+              <h3 className="mt-3 sm:mt-4 text-base sm:text-lg font-semibold">
+                {product.name}
+              </h3>
+              <p className="text-gray-700 font-medium text-sm sm:text-base">
+                ₹{product.price}
+              </p>
               <Link
                 to={`/products/${product._id}`}
-                className="inline-block mt-3 text-orange-600 hover:underline"
+                className="inline-block mt-2 sm:mt-3 text-orange-600 hover:underline text-sm sm:text-base"
               >
                 View Details
               </Link>
@@ -194,16 +206,18 @@ export default function Home() {
       </section>
 
       {/* BRAND STORY */}
-      <section className="bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 text-white py-24">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <section className="bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 text-white py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-extrabold mb-6">Our Story</h2>
-            <p className="text-gray-200 leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 sm:mb-6">
+              Our Story
+            </h2>
+            <p className="text-gray-200 leading-relaxed text-sm sm:text-base">
               We craft clothing that merges timeless design with modern comfort.
               Each piece is made with precision and passion to ensure you look
               and feel your best.
@@ -217,7 +231,7 @@ export default function Home() {
             className="rounded-xl overflow-hidden shadow-xl"
           >
             <video
-              className="w-full h-full object-cover"
+              className="w-full h-56 sm:h-72 md:h-full object-cover"
               autoPlay
               muted
               loop
@@ -233,12 +247,12 @@ export default function Home() {
       {/* REVIEWS - CAROUSEL */}
       <section
         ref={reviewRef}
-        className="max-w-6xl mx-auto px-6 py-20 text-center"
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center"
       >
-        <h2 className="text-4xl font-bold text-gray-800 mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-10 sm:mb-12">
           Customer Reviews
         </h2>
-        <div className="overflow-hidden">
+        <div className="w-full overflow-hidden">
           <Slider {...reviewSettings}>
             {[
               "Amazing quality and super comfy. Totally worth it!",
@@ -248,10 +262,14 @@ export default function Home() {
               "Customer support was excellent, very helpful!",
               "Truly the best shopping experience I’ve had.",
             ].map((review, i) => (
-              <div key={i} className="px-4">
-                <div className="bg-amber-50 p-6 rounded-lg shadow h-full flex flex-col justify-between">
-                  <p className="text-gray-600 italic">“{review}”</p>
-                  <h4 className="mt-4 font-semibold">— Customer {i + 1}</h4>
+              <div key={i} className="px-2 sm:px-4">
+                <div className="bg-amber-50 p-4 sm:p-6 rounded-lg shadow h-full flex flex-col justify-between">
+                  <p className="text-gray-600 italic text-sm sm:text-base leading-relaxed">
+                    “{review}”
+                  </p>
+                  <h4 className="mt-3 sm:mt-4 font-semibold text-sm sm:text-base">
+                    — Customer {i + 1}
+                  </h4>
                 </div>
               </div>
             ))}
@@ -260,19 +278,21 @@ export default function Home() {
       </section>
 
       {/* NEWSLETTER */}
-      <div className=" w-full bg-gradient-to-br from-orange-700 via-amber-600  text-amber-50 py-20">
+      <div className="w-full bg-gradient-to-br from-orange-700 via-amber-600 text-amber-50 py-16 sm:py-20">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <h2 className="text-2xl font-bold mb-4">📩 Join Our Newsletter</h2>
-          <p className="mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">
+            📩 Join Our Newsletter
+          </h2>
+          <p className="mb-6 text-sm sm:text-base">
             Be the first to know about new arrivals, sales & exclusive offers.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-4 py-2 border rounded-md text-amber-50 w-full sm:w-2/3 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="px-4 py-2 border rounded-md text-amber-50 w-full sm:w-2/3 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
             />
-            <button className="px-6 py-2 bg-amber-50 text-orange-600 font-medium rounded-md hover:bg-gray-100">
+            <button className="px-6 py-2 bg-amber-50 text-orange-600 font-medium rounded-md hover:bg-gray-100 text-sm sm:text-base">
               Subscribe
             </button>
           </div>
@@ -280,7 +300,7 @@ export default function Home() {
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-4 gap-8 text-center">
+      <div className="max-w-6xl mx-auto px-4 py-12 sm:py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
         {[
           {
             title: "Premium Quality",
@@ -305,17 +325,19 @@ export default function Home() {
         ].map((f, idx) => (
           <div
             key={idx}
-            className="bg-amber-50 shadow-md rounded-xl p-6 hover:shadow-lg transition"
+            className="bg-amber-50 shadow-md rounded-xl p-5 sm:p-6 hover:shadow-lg transition"
           >
-            <div className="text-4xl mb-3">{f.icon}</div>
-            <h3 className="font-semibold text-lg text-gray-800">{f.title}</h3>
-            <p className="text-gray-600 mt-2 text-sm">{f.desc}</p>
+            <div className="text-3xl sm:text-4xl mb-2 sm:mb-3">{f.icon}</div>
+            <h3 className="font-semibold text-base sm:text-lg text-gray-800">
+              {f.title}
+            </h3>
+            <p className="text-gray-600 mt-2 text-xs sm:text-sm">{f.desc}</p>
           </div>
         ))}
       </div>
 
       {/* TRUST BADGES */}
-      <div className="max-w-6xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div className="max-w-6xl mx-auto px-4 py-12 sm:py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center">
         {[
           {
             icon: <FaLock />,
@@ -335,81 +357,19 @@ export default function Home() {
         ].map((b, idx) => (
           <div
             key={idx}
-            className="p-6 bg-amber-50 shadow-xl rounded-xl hover:shadow-2xl"
+            className="p-5 sm:p-6 bg-amber-50 shadow-xl rounded-xl hover:shadow-2xl"
           >
-            <div className="text-3xl mb-3 flex justify-center text-orange-600">
+            <div className="text-2xl sm:text-3xl mb-2 sm:mb-3 flex justify-center text-orange-600">
               {b.icon}
             </div>
-            <h3 className="font-semibold text-lg text-gray-800">{b.title}</h3>
-            <p className="text-gray-600 text-sm mt-1">{b.desc}</p>
+            <h3 className="font-semibold text-base sm:text-lg text-gray-800">
+              {b.title}
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm mt-1">{b.desc}</p>
           </div>
         ))}
       </div>
-{/* 
-      FOOTER
-      <footer className="w-full bg-orange-700 text-gray-300 py-8">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-amber-50">
-            <p className="font-semibold text-lg mb-2 ">DesignMyFit</p>
-            <p className="text-sm ">
-              Express yourself through custom fashion. Designed by you, made for
-              you.
-            </p>
-          </div>
-          <div className="text-amber-50">
-            <p className="font-semibold mb-2">Quick Links</p>
-            <ul className="text-sm space-y-1">
-              <li>
-                <Link to="/products" className="hover:underline">
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link to="/cart" className="hover:underline">
-                  Cart
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:underline">
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="text-amber-50">
-            <p className="font-semibold mb-2 ">Contact</p>
-            <p className="text-sm">www.designmyfit.com</p>
-            <p className="text-sm ">+91 98765 43210</p>
-            <div className="flex gap-4 mt-3 text-xl">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href="https://wa.me/919876543210"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaWhatsapp />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="mt-6 text-center text-xs text-amber-50">
-          © {new Date().getFullYear()} DesignMyFit. All Rights Reserved.
-        </div>
-      </footer> */}
-      <Footer></Footer>
-    </div> 
+      <Footer />
+    </div>
   );
 }
