@@ -6,7 +6,6 @@ import Slider from "react-slick";
 import Footer from "../components/Footer";
 import { FaLock, FaTruck, FaUndo } from "react-icons/fa";
 
-import promo from "../assets/promo-video.mp4";
 import hero from "../assets/hero.jpg";
 
 import "slick-carousel/slick/slick.css";
@@ -125,7 +124,7 @@ export default function Home() {
         </p>
         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
           <video
-            src={promo}
+            src="https://res.cloudinary.com/dpakwdvuc/video/upload/v1756018330/promo-video_kza6fb.mp4"
             autoPlay
             muted
             loop
@@ -237,7 +236,7 @@ export default function Home() {
               loop
               playsInline
             >
-              <source src={promo} type="video/mp4" />
+              <source src="https://res.cloudinary.com/dpakwdvuc/video/upload/v1756018330/promo-video_kza6fb.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </motion.div>
