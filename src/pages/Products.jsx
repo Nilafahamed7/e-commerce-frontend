@@ -197,11 +197,7 @@ export default function Products() {
                   /> */}
 
                   <img
-                    src={
-                      p.imageUrl?.startsWith("http")
-                        ? p.imageUrl.replace("http://localhost:3000", "https://e-commerce-backend-production-fde7.up.railway.app")
-                        : `https://e-commerce-backend-production-fde7.up.railway.app${p.imageUrl}`
-                    }
+                    src={p.imageUrl}
                     alt={p.name}
                     className="w-full h-40 object-cover rounded-md"
                   />

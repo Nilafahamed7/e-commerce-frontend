@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useCart } from "../components/Context/CartContext";
 
+const getImageUrl = (url) => {
+  if (!url) return "/placeholder.svg";
+  return url.startsWith("http") ? url : "/placeholder.svg";
+};
+
 export default function Cart() {
   const navigate = useNavigate();
   const { cartItems, fetchCart, updateQuantity, removeFromCart } = useCart();
@@ -101,11 +106,7 @@ export default function Cart() {
               const key = item?._id || item?.id;
               const product = item?.product || item;
               const name = product?.name || "Product";
-              const image = (() => {
-                const src = product?.imageUrl || product?.image || "";
-                if (!src) return "/placeholder.svg";
-                return src.startsWith("http") ? src : `https://e-commerce-backend-production-fde7.up.railway.app${src}`;
-              })();
+              const image = getImageUrl(product?.imageUrl || product?.image);
               const price = product?.price ?? item?.price ?? 0;
               const size = item?.size;
               const color = item?.color;
@@ -123,8 +124,8 @@ export default function Cart() {
                     alt={name}
                     className="w-24 h-24 object-cover rounded-lg"
                     onError={(e) => {
-                      if (e.currentTarget.src.endsWith('/placeholder.svg')) return;
-                      e.currentTarget.src = '/placeholder.svg';
+                      if (e.currentTarget.src.endsWith("/placeholder.svg")) return;
+                      e.currentTarget.src = "/placeholder.svg";
                     }}
                   />
 

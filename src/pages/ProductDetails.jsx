@@ -15,6 +15,12 @@ export default function ProductDetails() {
   const [customImage, setCustomImage] = useState("");
   const { addToCart } = useCart(); // ✅ use context method
 
+  const getImageUrl = (url) => {
+    if (!url) return "/placeholder.png"; // fallback image
+    return url; // Cloudinary URLs already start with https
+  };
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -67,10 +73,11 @@ export default function ProductDetails() {
 
       <div className="grid md:grid-cols-2 gap-8">
         <img
-          src={product.imageUrl}
+          src={getImageUrl(product.imageUrl)}
           alt={product.name}
           className="w-full rounded-lg object-cover"
         />
+
 
         <div>
           <h1 className="text-3xl font-bold">{product.name}</h1>

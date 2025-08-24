@@ -19,9 +19,10 @@ export default function Checkout() {
         const fetchCart = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/cart", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                const res = await axios.get(
+                    "https://e-commerce-backend-production-fde7.up.railway.app/api/cart",
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
                 setCart(res.data);
             } catch (err) {
                 console.error("Cart fetch error:", err.response?.data || err.message);
@@ -70,7 +71,7 @@ export default function Checkout() {
 
             console.log("Order response:", res.data);
             resetForm();
-            navigate("/order-success"); // ✅ Redirect on success
+            navigate("/order-success");
         } catch (err) {
             console.error("COD Order Error:", err.response?.data || err.message);
             alert("Failed to place COD order ❌");
@@ -127,7 +128,7 @@ export default function Checkout() {
                         );
 
                         resetForm();
-                        navigate("/order-success"); // ✅ Redirect on success
+                        navigate("/order-success");
                     } catch (verifyErr) {
                         console.error("Verification Error:", verifyErr.response?.data || verifyErr.message);
                         alert("Payment verification failed ❌");
@@ -204,7 +205,7 @@ export default function Checkout() {
                         </label>
                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
                             <input type="radio" name="payment" value="card" checked={paymentMethod === "card"} onChange={(e) => setPaymentMethod(e.target.value)}/>
-                            <span className="font-medium">Credit / Debit Card</span>
+                            <span className="font-medium">Credit / Debit Card (Razorpay)</span>
                         </label>
                         <label className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
                             <input type="radio" name="payment" value="upi" checked={paymentMethod === "upi"} onChange={(e) => setPaymentMethod(e.target.value)}/>
@@ -223,11 +224,9 @@ export default function Checkout() {
                         const name = product.name || "Product";
                         const price = Number(product.price) || 0;
                         const qty = Number(item.quantity) || 1;
-                        const rawSrc = product.imageUrl || "";
-                        const src = rawSrc
-                            ? rawSrc.startsWith("http")
-                                ? rawSrc
-                                : `https://e-commerce-backend-production-fde7.up.railway.app${rawSrc}`
+                        // ✅ Use Cloudinary image if available
+                        const src = product.imageUrl?.startsWith("http")
+                            ? product.imageUrl
                             : "/placeholder.svg";
                         return (
                             <div key={item._id} className="flex gap-3 items-center">

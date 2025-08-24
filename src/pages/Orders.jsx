@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reordering, setReordering] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -15,9 +18,10 @@ export default function Orders() {
           return;
         }
 
-        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/orders/myorders", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/myorders",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
 
         setOrders(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
@@ -30,11 +34,50 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
-  if (loading) return <p className="text-center py-10">Loading your orders...</p>;
-  if (!orders.length) return <p className="text-center py-10">No orders found.</p>;
+  // 👉 Function to reorder items
+  const handleReorder = async (products) => {
+    try {
+      setReordering(true);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first");
+        return;
+      }
+
+      // Send each product to cart API
+      await Promise.all(
+        products.map((p) =>
+          axios.post(
+            "https://e-commerce-backend-production-fde7.up.railway.app/api/cart/add",
+            {
+              productId: p.productId?._id,
+              quantity: p.quantity || 1,
+            },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          )
+        )
+      );
+
+      alert("✅ Items added back to cart!");
+      navigate("/cart"); // 👉 Redirect to cart after reorder
+    } catch (err) {
+      console.error("❌ Error reordering:", err);
+      alert("Failed to reorder. Please try again.");
+    } finally {
+      setReordering(false);
+    }
+  };
+
+  if (loading)
+    return <p className="text-center py-10">Loading your orders...</p>;
+  if (!orders.length)
+    return <p className="text-center py-10">No orders found.</p>;
 
   return (
-    <div className="w-full flex flex-col justify-center items-center  mx-auto p-6 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
+    <div className="w-full flex flex-col justify-center items-center mx-auto p-6 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       <h2 className="text-2xl font-bold mb-6">My Orders</h2>
 
       {orders.map((order) => (
@@ -42,6 +85,7 @@ export default function Orders() {
           key={order._id}
           className="border w-[90%] sm:w-[60%] rounded-lg p-5 mb-6 shadow-sm bg-white"
         >
+          {/* Order header */}
           <div className="flex justify-between items-center">
             <h3 className="font-semibold">Order #{order._id.slice(-6)}</h3>
             <span
@@ -67,32 +111,43 @@ export default function Orders() {
           <div className="mt-4">
             <h4 className="font-medium">Products:</h4>
             {order.products?.length ? (
-              order.products.map((p, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 border-b py-2"
-                >
-                  {p.customImageUrl || p.productId?.imageUrl ? (
-                    <img
-                      src={p.customImageUrl || p.productId.imageUrl}
-                      alt={p.title}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded">
-                      No Image
+              order.products.map((p, idx) => {
+                const imgUrl =
+                  p.customImageUrl || p.productId?.imageUrl || "";
+
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-4 border-b py-2"
+                  >
+                    {imgUrl ? (
+                      <img
+                        src={imgUrl}
+                        alt={p.title || "Product"}
+                        className="w-16 h-16 object-cover rounded"
+                        onError={(e) => {
+                          e.target.src =
+                            "https://via.placeholder.com/80?text=No+Image";
+                        }}
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-gray-500 text-sm rounded">
+                        No Image
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-medium">{p.title}</p>
+                      <p className="text-sm text-gray-600">
+                        Qty: {p.quantity} × ₹{p.price}
+                      </p>
                     </div>
-                  )}
-                  <div>
-                    <p className="font-medium">{p.title}</p>
-                    <p className="text-sm text-gray-600">
-                      Qty: {p.quantity} × ₹{p.price}
-                    </p>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
-              <p className="text-sm text-gray-500">No products in this order.</p>
+              <p className="text-sm text-gray-500">
+                No products in this order.
+              </p>
             )}
           </div>
 
@@ -123,6 +178,17 @@ export default function Orders() {
               </p>
             )}
           </div>
+
+          {/* Reorder Button */}
+          {order.products?.length > 0 && (
+            <button
+              onClick={() => handleReorder(order.products)}
+              disabled={reordering}
+              className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-medium transition"
+            >
+              {reordering ? "Reordering..." : "Reorder"}
+            </button>
+          )}
         </div>
       ))}
     </div>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminCreateProduct() {
   const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false); // ✅ track image upload
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -39,13 +40,12 @@ export default function AdminCreateProduct() {
       return;
     }
     if (!imageUrl) {
-      alert("Please upload an image first");
+      alert("❌ Please upload an image first");
       return;
     }
 
     setLoading(true);
     try {
-      // ✅ format data
       const productData = {
         name: formData.name,
         description: formData.description,
@@ -56,14 +56,15 @@ export default function AdminCreateProduct() {
         imageUrl,
       };
 
-      await axios.post("https://e-commerce-backend-production-fde7.up.railway.app/api/products", productData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.post(
+        "https://e-commerce-backend-production-fde7.up.railway.app/api/products",
+        productData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       alert("✅ Product created successfully!");
-      // reset
       setFormData({
         name: "",
         description: "",
@@ -143,7 +144,18 @@ export default function AdminCreateProduct() {
         />
 
         {/* Image Upload */}
-        <UploadImage onUpload={(url) => setImageUrl(url)} />
+        <UploadImage
+          onUpload={(url) => {
+            setImageUrl(url);
+            setImageUploading(false);
+          }}
+          setUploading={setImageUploading} // ✅ pass down state setter
+        />
+
+        {imageUploading && (
+          <p className="text-sm text-gray-500">⏳ Uploading image...</p>
+        )}
+
         {imageUrl && (
           <div className="mt-2">
             <img
@@ -157,10 +169,18 @@ export default function AdminCreateProduct() {
 
         <button
           type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          disabled={loading || imageUploading} // ✅ block submit while uploading
+          className={`w-full py-2 px-4 rounded text-white ${
+            loading || imageUploading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          {loading ? "Saving..." : "Create Product"}
+          {loading
+            ? "Saving..."
+            : imageUploading
+            ? "Uploading image..."
+            : "Create Product"}
         </button>
       </form>
     </div>
