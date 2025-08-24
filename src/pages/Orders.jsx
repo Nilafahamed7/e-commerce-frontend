@@ -34,13 +34,6 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
-  // 👉 Normalize image URL
-  const buildImageUrl = (url) => {
-    if (!url) return "";
-    if (url.startsWith("http")) return url; // Cloudinary or external
-    return `https://e-commerce-backend-production-fde7.up.railway.app${url}`; // fallback for old /uploads paths
-  };
-
   // 👉 Function to reorder items
   const handleReorder = async (products) => {
     try {
@@ -119,9 +112,9 @@ export default function Orders() {
             <h4 className="font-medium">Products:</h4>
             {order.products?.length ? (
               order.products.map((p, idx) => {
-                const imgUrl = buildImageUrl(
-                  p.customImageUrl || p.productId?.imageUrl || ""
-                );
+                // ✅ FIX: use "image" field instead of imageUrl
+                const imgUrl =
+                  p.customImageUrl || p.productId?.image || "";
 
                 return (
                   <div
