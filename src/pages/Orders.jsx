@@ -72,9 +72,9 @@ export default function Orders() {
   };
 
   if (loading)
-    return <p className="text-center bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 text-3xl py-20">Loading your orders...</p>;
+    return <p className="text-center h-full bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 text-3xl py-20">Loading your orders...</p>;
   if (!orders.length)
-    return <p className="text-center text-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 py-20">No orders found.</p>;
+    return <p className="text-center h-full text-3xl bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 py-20">No orders found.</p>;
 
   return (
     <div className="w-full flex flex-col justify-center items-center mx-auto mt-20 p-6 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
