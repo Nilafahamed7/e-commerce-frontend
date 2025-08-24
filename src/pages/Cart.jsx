@@ -62,7 +62,7 @@ export default function Cart() {
 
   if (!cartItems || cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-100 pt-24 px-4 md:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500 pt-24 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <button
             onClick={() => navigate(-1)}
@@ -71,12 +71,12 @@ export default function Cart() {
             ← Back
           </button>
 
-          <div className="text-center py-12 bg-white rounded-lg shadow-md">
+          <div className="text-center py-12 bg-amber-50 rounded-lg shadow-md">
             <h1 className="text-2xl font-bold mb-2">Your cart is empty 🛒</h1>
             <p className="text-gray-600">Let’s find something you’ll love.</p>
             <Link
               to="/products"
-              className="mt-4 inline-block px-6 py-2 rounded-lg bg-fuchsia-600 text-white hover:bg-fuchsia-700"
+              className="mt-4 inline-block px-6 py-2 rounded-lg bg-orange-600 text-white hover:bg-orange-700"
             >
               Continue Shopping
             </Link>
