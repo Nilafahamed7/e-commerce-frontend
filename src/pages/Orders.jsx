@@ -15,7 +15,7 @@ export default function Orders() {
           return;
         }
 
-        const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/orders/myorders", {
+        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/orders/myorders", {
           headers: { Authorization: `Bearer ${token}` },
         });
 

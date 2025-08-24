@@ -25,7 +25,7 @@ export default function Products() {
   // fetch products
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/products");
+      const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/products");
       setProducts(res.data);
       setFiltered(res.data);
     };
@@ -190,11 +190,22 @@ export default function Products() {
             >
               <div className="bg-amber-50 rounded-lg p-4 h-full flex flex-col">
                 <div className="relative">
-                  <img
+                  {/* <img
                     src={p.imageUrl}
                     alt={p.name}
                     className="w-full h-40 object-cover rounded-md"
+                  /> */}
+
+                  <img
+                    src={
+                      p.imageUrl?.startsWith("http")
+                        ? p.imageUrl.replace("http://localhost:3000", "https://e-commerce-backend-production-fde7.up.railway.app")
+                        : `https://e-commerce-backend-production-fde7.up.railway.app${p.imageUrl}`
+                    }
+                    alt={p.name}
+                    className="w-full h-40 object-cover rounded-md"
                   />
+
 
                   <button
                     type="button"
@@ -217,14 +228,6 @@ export default function Products() {
                     className="flex-1 text-center px-3 py-2 rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
                     View Details
                   </Link>
-
-                  {/* ✅ Add to Cart
-                  <button
-                    onClick={() => addToCart(p._id)}
-                    className="px-3 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition"
-                  >
-                    Add
-                  </button> */}
                 </div>
               </div>
             </div>

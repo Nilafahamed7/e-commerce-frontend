@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const { data } = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/admin/dashboard", {
+        const { data } = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/admin/dashboard", {
           headers: {
             Authorization: `Bearer ${token}`
           }

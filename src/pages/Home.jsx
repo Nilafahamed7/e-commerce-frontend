@@ -16,11 +16,19 @@ export default function Home() {
   const [trending, setTrending] = useState([]);
   const reviewRef = useRef(null);
 
+
+  // ✅ helper to fix image URLs (must be here)
+  const getImageUrl = (url) => {
+    if (!url) return "/placeholder.png"; // fallback if no image
+    if (url.startsWith("http")) return url;
+    return `https://e-commerce-backend-production-fde7.up.railway.app${url}`;
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "https://e-commerce-backend-af5d.onrender.com/api/products"
+          "https://e-commerce-backend-production-fde7.up.railway.app/api/products"
         );
         setProducts(res.data.slice(0, 4));
         setTrending(res.data.slice(4, 8)); // mock trending products
@@ -136,7 +144,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* FEATURED PRODUCTS */}
+      {/* FEATURED PRODUCTS
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
           Featured Products
@@ -168,7 +176,44 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
+      </section> */}
+
+      {/* FEATURED PRODUCTS */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
+          Featured Products
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          {products.map((product) => (
+            <motion.div
+              key={product._id}
+              whileHover={{ scale: 1.05 }}
+              className="bg-amber-50 p-4 rounded-lg shadow hover:shadow-lg transition"
+            >
+              <img
+                src={getImageUrl(product.imageUrl)}
+                alt={product.name}
+                className="h-48 sm:h-56 w-full object-cover rounded-md"
+              />
+              <h3 className="mt-3 sm:mt-4 text-base sm:text-lg font-semibold">
+                {product.name}
+              </h3>
+              <p className="text-gray-700 font-medium text-sm sm:text-base">
+                ₹{product.price}
+              </p>
+              <Link
+                to={`/products/${product._id}`}
+                className="inline-block mt-2 sm:mt-3 text-orange-600 hover:underline text-sm sm:text-base"
+              >
+                View Details
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </section>
+
+
+3
 
       {/* TRENDING PRODUCTS */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 rounded-2xl shadow-inner">

@@ -8,7 +8,7 @@ export default function AdminProducts() {
   // Fetch products from backend
   const fetchProducts = async () => {
     try {
-      const res = await fetch("https://e-commerce-backend-af5d.onrender.com/api/products");
+      const res = await fetch("https://e-commerce-backend-production-fde7.up.railway.app/api/products");
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -27,7 +27,7 @@ export default function AdminProducts() {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const res = await fetch(`https://e-commerce-backend-production-fde7.up.railway.app/api/products/${id}`, {
         method: "DELETE",
       });
 

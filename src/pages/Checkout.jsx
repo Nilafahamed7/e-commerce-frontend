@@ -19,7 +19,7 @@ export default function Checkout() {
         const fetchCart = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/cart", {
+                const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/cart", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCart(res.data);
@@ -45,7 +45,7 @@ export default function Checkout() {
             const token = localStorage.getItem("token");
 
             const res = await axios.post(
-                "https://e-commerce-backend-af5d.onrender.com/api/orders",
+                "https://e-commerce-backend-production-fde7.up.railway.app/api/orders",
                 {
                     products: cart.items.map((item) => ({
                         productId: item.product?._id || item.productId,
@@ -83,7 +83,7 @@ export default function Checkout() {
             const token = localStorage.getItem("token");
 
             const res = await axios.post(
-                "https://e-commerce-backend-af5d.onrender.com/api/orders/razorpay",
+                "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/razorpay",
                 { amount: total },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -100,7 +100,7 @@ export default function Checkout() {
                 handler: async function (response) {
                     try {
                         await axios.post(
-                            "https://e-commerce-backend-af5d.onrender.com/api/orders/verify",
+                            "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/verify",
                             {
                                 razorpay_order_id: response.razorpay_order_id,
                                 razorpay_payment_id: response.razorpay_payment_id,
@@ -227,7 +227,7 @@ export default function Checkout() {
                         const src = rawSrc
                             ? rawSrc.startsWith("http")
                                 ? rawSrc
-                                : `http://localhost:3000${rawSrc}`
+                                : `https://e-commerce-backend-production-fde7.up.railway.app${rawSrc}`
                             : "/placeholder.svg";
                         return (
                             <div key={item._id} className="flex gap-3 items-center">

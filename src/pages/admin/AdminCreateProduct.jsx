@@ -56,7 +56,7 @@ export default function AdminCreateProduct() {
         imageUrl,
       };
 
-      await axios.post("https://e-commerce-backend-af5d.onrender.com/api/products", productData, {
+      await axios.post("https://e-commerce-backend-production-fde7.up.railway.app/api/products", productData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -8,7 +8,7 @@ export default function Account() {
     const run = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("https://e-commerce-backend-af5d.onrender.com/api/auth/me", {
+        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function UploadImage({ onUpload, endpoint = "https://e-commerce-backend-af5d.onrender.com/api/products/upload-image" }) {
+export default function UploadImage({ onUpload, endpoint = "https://e-commerce-backend-production-fde7.up.railway.app/api/products/upload-image" }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
 

@@ -18,7 +18,7 @@ export default function ProductDetails() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`https://e-commerce-backend-af5d.onrender.com/api/products/${id}`);
+        const res = await axios.get(`https://e-commerce-backend-production-fde7.up.railway.app/api/products/${id}`);
         setProduct(res.data);
       } catch (err) {
         console.error("Failed to fetch product:", err);

@@ -104,7 +104,7 @@ export default function Cart() {
               const image = (() => {
                 const src = product?.imageUrl || product?.image || "";
                 if (!src) return "/placeholder.svg";
-                return src.startsWith("http") ? src : `http://localhost:3000${src}`;
+                return src.startsWith("http") ? src : `https://e-commerce-backend-production-fde7.up.railway.app${src}`;
               })();
               const price = product?.price ?? item?.price ?? 0;
               const size = item?.size;
