@@ -25,7 +25,8 @@ export function CartProvider({ children }) {
       const res = await axios.get(`${API}/cart`, buildAuth());
       const items = res.data?.items || []; // ✅ handles empty cart
       setCartItems(items);
-      setCartCount(items.length);
+      // setCartCount(items.length);
+      setCartCount(items.reduce((acc, item) => acc + (item.quantity || 1), 0));
     } catch (e) {
       console.error("fetchCart failed:", e);
     }
