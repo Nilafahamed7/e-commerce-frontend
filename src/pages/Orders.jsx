@@ -77,7 +77,7 @@ export default function Orders() {
     return <p className="text-center py-10">No orders found.</p>;
 
   return (
-    <div className="w-full flex flex-col justify-center items-center mx-auto p-6 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
+    <div className="w-full flex flex-col justify-center items-center mx-auto mt-20 p-6 py-20 bg-gradient-to-br from-amber-100 via-orange-100 to-yellow-500">
       <h2 className="text-2xl font-bold mb-6">My Orders</h2>
 
       {orders.map((order) => (
