@@ -233,9 +233,10 @@ export default function Home() {
 
       {/* FEATURED PRODUCTS */}
       <section ref={featureRef} className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <h2 className={`text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12 transition-opacity duration-700 ${featureInView ? "opacity-100" : "opacity-0"}`}>
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
           ⭐ Featured Products
         </h2>
+        {console.log("🎯 Rendering featured section - Loading:", loading, "Error:", error, "Featured count:", featured.length, "FeatureInView:", featureInView)}
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
@@ -252,7 +253,7 @@ export default function Home() {
                 <motion.div
                   key={p._id}
                   initial={{ opacity: 0, y: 40 }}
-                  animate={featureInView ? { opacity: 1, y: 0 } : {}}
+                  animate={featureInView ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: idx * 0.15 }}
                   className="bg-amber-50 p-4 rounded-lg shadow hover:shadow-lg transition group"
                 >
