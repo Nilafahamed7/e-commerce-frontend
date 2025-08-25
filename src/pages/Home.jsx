@@ -14,6 +14,18 @@ export default function Home() {
   const [error, setError] = useState(null);
   const { toggle, isWished } = useWishlist();
 
+  // Helper function to get image URL with fallback
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return "/placeholder.svg";
+    
+    // Convert .avif to .webp for better browser compatibility
+    if (imageUrl.includes('.avif')) {
+      return imageUrl.replace('.avif', '.webp');
+    }
+    
+    return imageUrl.startsWith('http') ? imageUrl : "/placeholder.svg";
+  };
+
   // Fetch products for featured & trending
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,30 +33,35 @@ export default function Home() {
         setLoading(true);
         setError(null);
         
-        console.log("Fetching products...");
+        console.log("🔄 Fetching products from API...");
         const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/products");
         
-        console.log("Products response:", res.data);
+        console.log("✅ API Response received:", res.data);
+        console.log("📊 Total products received:", res.data?.length || 0);
         
         if (res.data && res.data.length > 0) {
           const shuffled = res.data.sort(() => 0.5 - Math.random());
           const featuredProducts = shuffled.slice(0, 3);
           const trendingProducts = shuffled.slice(3, 7);
           
-          console.log("Featured products:", featuredProducts);
-          console.log("Trending products:", trendingProducts);
+          console.log("⭐ Featured products (3):", featuredProducts.map(p => p.name));
+          console.log("🔥 Trending products (4):", trendingProducts.map(p => p.name));
           
           setFeatured(featuredProducts);
           setTrending(trendingProducts);
+          
+          console.log("✅ State updated - Featured:", featuredProducts.length, "Trending:", trendingProducts.length);
         } else {
-          console.log("No products found in response");
+          console.log("❌ No products found in response");
           setError("No products available");
         }
       } catch (err) {
-        console.error("Error fetching products:", err);
+        console.error("❌ Error fetching products:", err);
+        console.error("❌ Error details:", err.response?.data || err.message);
         setError("Failed to load products. Please try again.");
       } finally {
         setLoading(false);
+        console.log("🏁 Loading finished");
       }
     };
 
@@ -241,16 +258,16 @@ export default function Home() {
                 >
                   <div className="relative">
                     <img
-                      src={p.imageUrl?.startsWith('http') ? p.imageUrl : `/placeholder.svg`}
+                      src={getImageUrl(p.imageUrl)}
                       alt={p.name}
                       className="h-48 sm:h-56 w-full object-cover rounded-md group-hover:scale-105 transition"
                       onError={(e) => {
-                        console.log('Image failed to load:', p.imageUrl);
+                        console.log('❌ Image failed to load:', p.imageUrl);
                         e.target.onerror = null;
                         e.target.src = "/placeholder.svg";
                       }}
                       onLoad={(e) => {
-                        console.log('Image loaded successfully:', p.imageUrl);
+                        console.log('✅ Image loaded successfully:', p.imageUrl);
                       }}
                     />
                     <button
@@ -420,6 +437,7 @@ export default function Home() {
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-10 sm:mb-12">
           🔥 Trending Now
         </h2>
+        {console.log("🎯 Rendering trending section - Loading:", loading, "Error:", error, "Trending count:", trending.length)}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {[1, 2, 3, 4].map((i) => (
@@ -442,16 +460,16 @@ export default function Home() {
                 <div className="relative">
                   <Link to={`/products/${p._id}`}>
                     <img
-                      src={p.imageUrl?.startsWith('http') ? p.imageUrl : `/placeholder.svg`}
+                      src={getImageUrl(p.imageUrl)}
                       alt={p.name}
                       className="h-48 sm:h-56 w-full object-cover rounded-md group-hover:scale-105 transition"
                       onError={(e) => {
-                        console.log('Image failed to load:', p.imageUrl);
+                        console.log('❌ Image failed to load:', p.imageUrl);
                         e.target.onerror = null;
                         e.target.src = "/placeholder.svg";
                       }}
                       onLoad={(e) => {
-                        console.log('Image loaded successfully:', p.imageUrl);
+                        console.log('✅ Image loaded successfully:', p.imageUrl);
                       }}
                     />
                   </Link>
