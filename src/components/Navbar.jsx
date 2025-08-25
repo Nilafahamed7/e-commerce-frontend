@@ -1,10 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaShoppingCart, FaUserCircle, FaHeart } from "react-icons/fa";
+import { 
+  ShoppingCart, 
+  User, 
+  Heart, 
+  Menu, 
+  X, 
+  Home, 
+  Package, 
+  Settings, 
+  FileText, 
+  HelpCircle, 
+  Truck, 
+  LogOut,
+  Crown,
+  Plus
+} from "lucide-react";
 import { useCart } from "../components/Context/CartContext";
 import { useWishlist } from "../components/Context/WishlistContext";
-import logo from "../assets/store-logo.png"; // ✅ Make sure your logo has transparent bg
+import logo from "../assets/store-logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,230 +38,392 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("userName");
     navigate("/login");
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/products" },
+    { name: "Home", path: "/", icon: Home },
+    { name: "Products", path: "/products", icon: Package },
   ];
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -15 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="w-full fixed top-0 bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 backdrop-blur-lg shadow-xl z-50"
+      transition={{ duration: 0.5 }}
+      className="w-full fixed top-0 bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600 backdrop-blur-xl shadow-lg z-50"
     >
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        
-        {/* ✅ Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-2xl md:text-3xl font-extrabold tracking-tight text-white drop-shadow-lg"
-        >
-          <img
-            src={logo}
-            alt="DesignMyFit Logo"
-            className="h-10 w-10 rounded-full shadow-lg border-2 border-white/60 bg-gradient-to-r from-orange-700 via-amber-600 to-yellow-600" 
-          />
-          <span className="inline text-amber-50">DesignMyFit</span>
-        </Link>
-
-        {/* ✅ Desktop Links */}
-        <div className="hidden md:flex items-center gap-6">
-          {navLinks.map((l) => (
-            <motion.div
-              key={l.path}
-              whileHover={{ scale: 1.1 }}
-              className="px-3 py-[6px] rounded-full text-sm font-medium bg-white/20 text-amber-50 hover:bg-white/30 transition"
-            >
-              <Link to={l.path}>{l.name}</Link>
-            </motion.div>
-          ))}
-
-         
-
-          {/* Cart */}
-          <Link to="/cart" className="relative flex items-center hover:scale-110 transition">
-            <FaShoppingCart className="text-2xl text-amber-50 drop-shadow" />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-orange-600 text-xs text-amber-50 rounded-full px-2 py-[2px] shadow-md">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-
-          {/* Wishlist */}
-          <Link to="/wishlist" className="relative flex items-center hover:scale-110 transition">
-            <FaHeart className="text-2xl text-amber-50 drop-shadow" />
-            {wishlistCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-orange-600 text-xs text-amber-50 rounded-full px-2 py-[2px] shadow-md">
-                {wishlistCount}
-              </span>
-            )}
-          </Link>
-
-          {/* Profile Dropdown */}
-          {isLoggedIn ? (
-            <div className="relative flex items-center">
-              <button
-                className="flex items-center justify-center hover:scale-110 transition"
-                onClick={() => setProfileOpen(!profileOpen)}
-              >
-                <FaUserCircle className="text-3xl text-white drop-shadow" />
-                {userName && (
-                  <span className="ml-2 text-white font-medium hidden md:inline">
-                    {userName}
-                  </span>
-                )}
-              </button>
-
-              <AnimatePresence>
-                {profileOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-[400px] w-52 bg-amber-50 text-gray-800 rounded-lg shadow-lg overflow-hidden"
-                  >
-                    <div className="flex justify-between items-center px-4 py-2 border-b">
-                      <span className="font-semibold text-gray-700">My Account</span>
-                      <button
-                        className="text-gray-500 hover:text-gray-700"
-                        onClick={() => setProfileOpen(false)}
-                      >
-                        ✕
-                      </button>
-                    </div>
-
-                    <Link to="/account" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Account Details</Link>
-                    <Link to="/orders" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Orders</Link>
-                    <Link to="/help" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Help</Link>
-                    <Link to="/refund-policy" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Refund Policy</Link>
-                    <Link to="/track-order" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Track Order</Link>
-
-                    {/* ✅ Admin-only Links inside Profile */}
-                    {isAdmin && (
-                      <>
-                        <Link to="/admin/dashboard" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Admin Dashboard</Link>
-                        <Link to="/admin/create-product" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setProfileOpen(false)}>Create Product</Link>
-                      </>
-                    )}
-
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setProfileOpen(false);
-                      }}
-                      className="w-full text-left bg-red-500 text-white px-4 py-2 hover:bg-red-600"
-                    >
-                      Logout
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ) : (
-            <motion.div
-              whileHover={{ scale: 1.08 }}
-              className="px-3 py-[6px] rounded-full text-sm font-medium bg-orange-600 shadow-lg text-amber-50 hover:bg-orange-700 transition"
-            >
-              <Link to="/login">Login</Link>
-            </motion.div>
-          )}
-        </div>
-
-        {/* ✅ Mobile Hamburger */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-7"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          
+          {/* Logo */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-            />
-          </svg>
-        </button>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="relative"
+            >
+              <img
+                src={logo}
+                alt="DesignMyFit Logo"
+                className="h-10 w-10 rounded-xl shadow-md border-2 border-orange-200 group-hover:border-orange-400 transition-colors duration-200" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-200"></div>
+            </motion.div>
+            <span className="text-2xl font-bold text-white">
+              DesignMyFit
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {/* Nav Links */}
+            <div className="flex items-center gap-2">
+              {navLinks.map((link) => (
+                <motion.div
+                  key={link.path}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                                     <Link
+                     to={link.path}
+                     className="flex items-center gap-2 px-4 py-2 rounded-xl text-white hover:text-yellow-200 hover:bg-white/20 transition-all duration-200 font-medium"
+                   >
+                    <link.icon className="w-4 h-4" />
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Action Icons */}
+            <div className="flex items-center gap-4">
+              {/* Cart */}
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                                 <Link 
+                   to="/cart" 
+                   className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                 >
+                   <ShoppingCart className="w-6 h-6 text-white" />
+                  {cartCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                    >
+                      {cartCount}
+                    </motion.span>
+                  )}
+                </Link>
+              </motion.div>
+
+              {/* Wishlist */}
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                                 <Link 
+                   to="/wishlist" 
+                   className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                 >
+                   <Heart className="w-6 h-6 text-white" />
+                  {wishlistCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                    >
+                      {wishlistCount}
+                    </motion.span>
+                  )}
+                </Link>
+              </motion.div>
+
+              {/* Profile Dropdown */}
+              {isLoggedIn ? (
+                <div className="relative">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setProfileOpen(!profileOpen)}
+                                         className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                   >
+                     <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                       <User className="w-4 h-4 text-white" />
+                     </div>
+                     <span className="text-white font-medium hidden lg:block">
+                       {userName || "User"}
+                     </span>
+                    {isAdmin && (
+                      <Crown className="w-4 h-4 text-yellow-500" />
+                    )}
+                  </motion.button>
+
+                  <AnimatePresence>
+                    {profileOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
+                      >
+                        {/* Header */}
+                        <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-4 text-white">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                              <User className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <p className="font-semibold">{userName || "User"}</p>
+                              <p className="text-sm opacity-90">
+                                {isAdmin ? "Administrator" : "Customer"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="p-2">
+                          <Link 
+                            to="/account" 
+                            onClick={() => setProfileOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
+                          >
+                            <Settings className="w-4 h-4" />
+                            Account Details
+                          </Link>
+                          
+                          <Link 
+                            to="/orders" 
+                            onClick={() => setProfileOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
+                          >
+                            <FileText className="w-4 h-4" />
+                            Orders
+                          </Link>
+                          
+                          <Link 
+                            to="/track-order" 
+                            onClick={() => setProfileOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
+                          >
+                            <Truck className="w-4 h-4" />
+                            Track Order
+                          </Link>
+                          
+                          <Link 
+                            to="/help" 
+                            onClick={() => setProfileOpen(false)}
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
+                          >
+                            <HelpCircle className="w-4 h-4" />
+                            Help
+                          </Link>
+
+                          {/* Admin Links */}
+                          {isAdmin && (
+                            <>
+                              <div className="border-t border-gray-100 my-2"></div>
+                              <Link 
+                                to="/admin/dashboard" 
+                                onClick={() => setProfileOpen(false)}
+                                className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-yellow-50 transition-colors duration-200 text-yellow-700"
+                              >
+                                <Crown className="w-4 h-4" />
+                                Admin Dashboard
+                              </Link>
+                              <Link 
+                                to="/admin/create-product" 
+                                onClick={() => setProfileOpen(false)}
+                                className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-yellow-50 transition-colors duration-200 text-yellow-700"
+                              >
+                                <Plus className="w-4 h-4" />
+                                Create Product
+                              </Link>
+                            </>
+                          )}
+
+                          <div className="border-t border-gray-100 my-2"></div>
+                          
+                          <button
+                            onClick={() => {
+                              handleLogout();
+                              setProfileOpen(false);
+                            }}
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-red-50 transition-colors duration-200 text-red-600 w-full text-left"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Logout
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                                     <Link
+                     to="/login"
+                     className="px-6 py-2 bg-white/90 text-orange-700 rounded-xl font-semibold hover:bg-white transition-all duration-200 shadow-md hover:shadow-lg"
+                   >
+                     Sign In
+                   </Link>
+                </motion.div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+                         className="md:hidden p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+                         {isOpen ? (
+               <X className="w-6 h-6 text-white" />
+             ) : (
+               <Menu className="w-6 h-6 text-white" />
+             )}
+          </motion.button>
+        </div>
       </div>
 
-      {/* ✅ Mobile Dropdown */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-gradient-to-b from-orange-700 via-amber-600 to-yellow-600 px-6 py-4 space-y-4 shadow-lg"
+                         className="md:hidden bg-gradient-to-b from-orange-700 via-amber-600 to-yellow-600 border-t border-white/20"
           >
-            {navLinks.map((l) => (
-              <Link
-                key={l.path}
-                to={l.path}
-                onClick={() => setIsOpen(false)}
-                className="block text-white text-lg font-medium hover:text-yellow-200"
-              >
-                {l.name}
-              </Link>
-            ))}
-
-            {/* ✅ Admin-only buttons (Mobile) */}
-            {isLoggedIn && isAdmin && (
-              <>
+            <div className="px-4 py-6 space-y-4">
+              {/* Nav Links */}
+              {navLinks.map((link) => (
                 <Link
-                  to="/admin/dashboard"
+                  key={link.path}
+                  to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className="block text-yellow-200 text-lg font-semibold"
+                                     className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white font-medium"
                 >
-                  Admin Dashboard
+                  <link.icon className="w-5 h-5" />
+                  {link.name}
                 </Link>
-                <Link
-                  to="/admin/create-product"
-                  onClick={() => setIsOpen(false)}
-                  className="block text-green-200 text-lg font-semibold"
-                >
-                  Create Product
+              ))}
+
+              {/* Action Items */}
+                             <div className="border-t border-white/20 pt-4 space-y-4">
+                                 <Link 
+                   to="/cart" 
+                   onClick={() => setIsOpen(false)}
+                   className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                 >
+                   <div className="flex items-center gap-3">
+                     <ShoppingCart className="w-5 h-5" />
+                     Cart
+                   </div>
+                  {cartCount > 0 && (
+                    <span className="bg-orange-500 text-white text-xs rounded-full px-2 py-1 font-bold">
+                      {cartCount}
+                    </span>
+                  )}
                 </Link>
-              </>
-            )}
 
-            <Link to="/cart" onClick={() => setIsOpen(false)} className="block text-white text-lg">
-              Cart ({cartCount})
-            </Link>
-            <Link to="/wishlist" onClick={() => setIsOpen(false)} className="block text-white text-lg">
-              Wishlist ({wishlistCount})
-            </Link>
+                                 <Link 
+                   to="/wishlist" 
+                   onClick={() => setIsOpen(false)}
+                   className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                 >
+                   <div className="flex items-center gap-3">
+                     <Heart className="w-5 h-5" />
+                     Wishlist
+                   </div>
+                  {wishlistCount > 0 && (
+                    <span className="bg-pink-500 text-white text-xs rounded-full px-2 py-1 font-bold">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Link>
 
-            {isLoggedIn ? (
-              <>
-                <Link to="/account" onClick={() => setIsOpen(false)} className="block text-white text-lg">Account</Link>
-                <Link to="/orders" onClick={() => setIsOpen(false)} className="block text-white text-lg">Orders</Link>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="w-full text-left text-red-200 font-semibold"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Link to="/login" onClick={() => setIsOpen(false)} className="block text-white text-lg font-semibold">
-                Login
-              </Link>
-            )}
+                {isLoggedIn ? (
+                  <>
+                    <div className="border-t border-gray-100 pt-4 space-y-2">
+                                             <Link 
+                         to="/account" 
+                         onClick={() => setIsOpen(false)}
+                         className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                       >
+                        <Settings className="w-5 h-5" />
+                        Account Details
+                      </Link>
+                      
+                                             <Link 
+                         to="/orders" 
+                         onClick={() => setIsOpen(false)}
+                         className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                       >
+                        <FileText className="w-5 h-5" />
+                        Orders
+                      </Link>
+
+                      {isAdmin && (
+                        <>
+                          <div className="border-t border-white/20 pt-4 space-y-2">
+                                                         <Link 
+                               to="/admin/dashboard" 
+                               onClick={() => setIsOpen(false)}
+                               className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
+                             >
+                              <Crown className="w-5 h-5" />
+                              Admin Dashboard
+                            </Link>
+                                                         <Link 
+                               to="/admin/create-product" 
+                               onClick={() => setIsOpen(false)}
+                               className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
+                             >
+                              <Plus className="w-5 h-5" />
+                              Create Product
+                            </Link>
+                          </div>
+                        </>
+                      )}
+
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsOpen(false);
+                        }}
+                                                 className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-red-200 w-full text-left"
+                      >
+                        <LogOut className="w-5 h-5" />
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                                     <Link
+                     to="/login"
+                     onClick={() => setIsOpen(false)}
+                     className="block w-full px-4 py-3 bg-white/90 text-orange-700 rounded-xl font-semibold text-center hover:bg-white transition-all duration-200"
+                   >
+                     Sign In
+                   </Link>
+                )}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

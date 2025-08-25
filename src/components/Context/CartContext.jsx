@@ -53,8 +53,37 @@ export function CartProvider({ children }) {
   const updateQuantity = async (cartItemId, quantity) => {
     const token = getToken();
     if (!token) return;
-    await axios.patch(`${API}/cart/${cartItemId}`, { quantity }, buildAuth()); // ✅ fixed URL
-    fetchCart(); // refresh after update
+    
+    try {
+      // Find the current item to get its details
+      const currentItem = cartItems.find(item => item._id === cartItemId);
+      if (!currentItem) {
+        throw new Error("Item not found in cart");
+      }
+      
+      // Remove the current item
+      await axios.delete(`${API}/cart/${cartItemId}`, buildAuth());
+      
+      // Add it back with the new quantity
+      await axios.post(
+        `${API}/cart/add`,
+        {
+          productId: currentItem.product._id,
+          quantity: quantity,
+          size: currentItem.size,
+          color: currentItem.color,
+          customText: currentItem.customText || "",
+          customImage: currentItem.customImage || ""
+        },
+        buildAuth()
+      );
+      
+      // Refresh cart
+      fetchCart();
+    } catch (error) {
+      console.error("Failed to update quantity:", error);
+      throw error;
+    }
   };
 
   const removeFromCart = async (cartItemId) => {
