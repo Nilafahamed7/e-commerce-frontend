@@ -27,6 +27,7 @@ export default function Products() {
 
   // fetch products
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchProducts = async () => {
       try {
         setLoading(true);
