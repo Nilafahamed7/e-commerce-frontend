@@ -96,7 +96,7 @@ export default function Home() {
           className="text-left"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-            Design Your Own Style
+            Elevate Your  Style
           </h1>
           <p className="mt-4 text-base sm:text-lg text-gray-700">
             Stand out from the crowd. Build clothing that reflects your true

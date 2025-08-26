@@ -307,16 +307,36 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-                         className="md:hidden bg-gradient-to-b from-orange-700 via-amber-600 to-yellow-600 border-t border-white/20"
+            className="md:hidden bg-gradient-to-b from-orange-700 via-amber-600 to-yellow-600 border-t border-white/20 shadow-lg"
           >
-            <div className="px-4 py-6 space-y-4">
+            <div className="px-4 py-4 space-y-3">
+              {/* User Info (if logged in) */}
+              {isLoggedIn && (
+                <div className="bg-white/10 rounded-xl p-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold">{userName || "User"}</p>
+                      <p className="text-white/80 text-sm">
+                        {isAdmin ? "Administrator" : "Customer"}
+                      </p>
+                    </div>
+                    {isAdmin && (
+                      <Crown className="w-5 h-5 text-yellow-300 ml-auto" />
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Nav Links */}
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                                     className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white font-medium"
+                  className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white font-medium"
                 >
                   <link.icon className="w-5 h-5" />
                   {link.name}
@@ -324,78 +344,100 @@ export default function Navbar() {
               ))}
 
               {/* Action Items */}
-                             <div className="border-t border-white/20 pt-4 space-y-4">
-                                 <Link 
-                   to="/cart" 
-                   onClick={() => setIsOpen(false)}
-                   className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
-                 >
-                   <div className="flex items-center gap-3">
-                     <ShoppingCart className="w-5 h-5" />
-                     Cart
-                   </div>
+              <div className="border-t border-white/20 pt-4 space-y-4">
+                {/* Cart */}
+                <Link 
+                  to="/cart" 
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                >
+                  <div className="flex items-center gap-3">
+                    <ShoppingCart className="w-5 h-5" />
+                    <span className="font-medium">Cart</span>
+                  </div>
                   {cartCount > 0 && (
-                    <span className="bg-orange-500 text-white text-xs rounded-full px-2 py-1 font-bold">
+                    <span className="bg-orange-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[20px] text-center">
                       {cartCount}
                     </span>
                   )}
                 </Link>
 
-                                 <Link 
-                   to="/wishlist" 
-                   onClick={() => setIsOpen(false)}
-                   className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
-                 >
-                   <div className="flex items-center gap-3">
-                     <Heart className="w-5 h-5" />
-                     Wishlist
-                   </div>
+                {/* Wishlist */}
+                <Link 
+                  to="/wishlist" 
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                >
+                  <div className="flex items-center gap-3">
+                    <Heart className="w-5 h-5" />
+                    <span className="font-medium">Wishlist</span>
+                  </div>
                   {wishlistCount > 0 && (
-                    <span className="bg-pink-500 text-white text-xs rounded-full px-2 py-1 font-bold">
+                    <span className="bg-pink-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[20px] text-center">
                       {wishlistCount}
                     </span>
                   )}
                 </Link>
 
+                {/* User Menu Items */}
                 {isLoggedIn ? (
                   <>
-                    <div className="border-t border-gray-100 pt-4 space-y-2">
-                                             <Link 
-                         to="/account" 
-                         onClick={() => setIsOpen(false)}
-                         className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
-                       >
+                    <div className="border-t border-white/20 pt-3 space-y-1">
+                      <Link 
+                        to="/account" 
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                      >
                         <Settings className="w-5 h-5" />
-                        Account Details
+                        <span className="font-medium">Account Details</span>
                       </Link>
                       
-                                             <Link 
-                         to="/orders" 
-                         onClick={() => setIsOpen(false)}
-                         className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
-                       >
+                      <Link 
+                        to="/orders" 
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                      >
                         <FileText className="w-5 h-5" />
-                        Orders
+                        <span className="font-medium">Orders</span>
+                      </Link>
+                      
+                      <Link 
+                        to="/track-order" 
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                      >
+                        <Truck className="w-5 h-5" />
+                        <span className="font-medium">Track Order</span>
+                      </Link>
+                      
+                      <Link 
+                        to="/help" 
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
+                      >
+                        <HelpCircle className="w-5 h-5" />
+                        <span className="font-medium">Help</span>
                       </Link>
 
+                      {/* Admin Links */}
                       {isAdmin && (
                         <>
-                          <div className="border-t border-white/20 pt-4 space-y-2">
-                                                         <Link 
-                               to="/admin/dashboard" 
-                               onClick={() => setIsOpen(false)}
-                               className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
-                             >
+                          <div className="border-t border-white/20 pt-3 space-y-1">
+                            <Link 
+                              to="/admin/dashboard" 
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
+                            >
                               <Crown className="w-5 h-5" />
-                              Admin Dashboard
+                              <span className="font-medium">Admin Dashboard</span>
                             </Link>
-                                                         <Link 
-                               to="/admin/create-product" 
-                               onClick={() => setIsOpen(false)}
-                               className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
-                             >
+                            <Link 
+                              to="/admin/create-product" 
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
+                            >
                               <Plus className="w-5 h-5" />
-                              Create Product
+                              <span className="font-medium">Create Product</span>
                             </Link>
                           </div>
                         </>
@@ -406,21 +448,21 @@ export default function Navbar() {
                           handleLogout();
                           setIsOpen(false);
                         }}
-                                                 className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/20 transition-colors duration-200 text-red-200 w-full text-left"
+                        className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-red-200 w-full text-left text-sm"
                       >
-                        <LogOut className="w-5 h-5" />
-                        Logout
+                        <LogOut className="w-4 h-4" />
+                        <span className="font-medium">Logout</span>
                       </button>
                     </div>
                   </>
                 ) : (
-                                     <Link
-                     to="/login"
-                     onClick={() => setIsOpen(false)}
-                     className="block w-full px-4 py-3 bg-white/90 text-orange-700 rounded-xl font-semibold text-center hover:bg-white transition-all duration-200"
-                   >
-                     Sign In
-                   </Link>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-4 py-3 bg-white/90 text-orange-700 rounded-xl font-semibold text-center hover:bg-white transition-all duration-200"
+                  >
+                    Sign In
+                  </Link>
                 )}
               </div>
             </div>

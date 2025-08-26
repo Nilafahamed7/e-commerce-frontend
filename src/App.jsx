@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Navbar from "./components/Navbar";
+import AIChatWidget from "./components/AIChatWidget";
 import AdminCreateProduct from "./pages/admin/AdminCreateProduct";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./pages/Login";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/order-success" element={<OrderSuccess/>}></Route>
       </Routes>
+      <AIChatWidget />
       <ToastContainer position="top-right" />
     </BrowserRouter>
   );
