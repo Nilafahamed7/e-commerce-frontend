@@ -24,7 +24,8 @@ export default function AdminCreateProduct() {
   // Check admin access
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const isAdmin = user.isAdmin === true;
     
     if (!token) {
       setError("Please login first");
