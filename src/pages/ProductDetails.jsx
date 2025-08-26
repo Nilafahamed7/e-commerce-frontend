@@ -115,7 +115,7 @@ export default function ProductDetails() {
             transition={{ delay: 0.1 }}
             className="space-y-4"
           >
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-white w-[90%] rounded-2xl shadow-xl overflow-hidden">
               <img
                 src={getImageUrl(product.imageUrl)}
                 alt={product.name}
@@ -129,7 +129,7 @@ export default function ProductDetails() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-6 w-[90%]"
           >
             {/* Product Header */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
