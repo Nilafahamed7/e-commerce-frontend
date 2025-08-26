@@ -164,12 +164,12 @@ export default function ProductDetails() {
                 {/* Size Selection */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">Select Size</label>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="flex flex-wrap gap-3">
                     {product.sizeOptions?.map((s) => (
                       <button
                         key={s}
                         onClick={() => setSize(s)}
-                        className={`py-3 px-4 rounded-lg border-2 font-medium transition-all duration-200 ${
+                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[60px] text-center ${
                           size === s
                             ? "border-orange-500 bg-orange-50 text-orange-700"
                             : "border-gray-200 hover:border-orange-300 text-gray-700"
@@ -184,12 +184,12 @@ export default function ProductDetails() {
                 {/* Color Selection */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">Select Color</label>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="flex flex-wrap gap-3">
                     {product.colorOptions?.map((c) => (
                       <button
                         key={c}
                         onClick={() => setColor(c)}
-                        className={`py-3 px-4 rounded-lg border-2 font-medium transition-all duration-200 ${
+                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[80px] text-center ${
                           color === c
                             ? "border-orange-500 bg-orange-50 text-orange-700"
                             : "border-gray-200 hover:border-orange-300 text-gray-700"
