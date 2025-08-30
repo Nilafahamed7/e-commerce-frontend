@@ -137,7 +137,7 @@ export default function Navbar() {
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold z-10"
+                      className="absolute -top-6 -right-2 bg-pink-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold z-10"
                     >
                       {wishlistCount}
                     </motion.span>
