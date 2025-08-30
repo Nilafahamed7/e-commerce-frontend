@@ -108,7 +108,7 @@ export default function Navbar() {
               >
                 <Link
                   to="/cart"
-                  className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                  className="relative p-2 rounded-xl  transition-colors duration-200"
                 >
                   <ShoppingCart className="w-6 h-6 text-white" />
                   {cartCount > 0 && (
@@ -130,7 +130,7 @@ export default function Navbar() {
               >
                 <Link
                   to="/wishlist"
-                  className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                  className="relative p-2 rounded-xl transition-colors duration-200"
                 >
                   <Heart className="w-6 h-6 text-white" />
                   {wishlistCount > 0 && (
