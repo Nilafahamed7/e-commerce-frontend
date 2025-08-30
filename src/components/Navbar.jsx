@@ -1,18 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  ShoppingCart, 
-  User, 
-  Heart, 
-  Menu, 
-  X, 
-  Home, 
-  Package, 
-  Settings, 
-  FileText, 
-  HelpCircle, 
-  Truck, 
+import {
+  ShoppingCart,
+  User,
+  Heart,
+  Menu,
+  X,
+  Home,
+  Package,
+  Settings,
+  FileText,
+  HelpCircle,
+  Truck,
   LogOut,
   Crown,
   Plus
@@ -56,7 +56,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          
+
           {/* Logo */}
           <Link
             to="/"
@@ -69,7 +69,7 @@ export default function Navbar() {
               <img
                 src={logo}
                 alt="DesignMyFit Logo"
-                className="h-10 w-10 rounded-xl shadow-md border-2 border-orange-200 group-hover:border-orange-400 transition-colors duration-200" 
+                className="h-10 w-10 rounded-xl shadow-md border-2 border-orange-200 group-hover:border-orange-400 transition-colors duration-200"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-200"></div>
             </motion.div>
@@ -88,10 +88,10 @@ export default function Navbar() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                                     <Link
-                     to={link.path}
-                     className="flex items-center gap-2 px-4 py-2 rounded-xl text-white hover:text-yellow-200 hover:bg-white/20 transition-all duration-200 font-medium"
-                   >
+                  <Link
+                    to={link.path}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-white hover:text-yellow-200 hover:bg-white/20 transition-all duration-200 font-medium"
+                  >
                     <link.icon className="w-4 h-4" />
                     {link.name}
                   </Link>
@@ -106,16 +106,16 @@ export default function Navbar() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                                 <Link 
-                   to="/cart" 
-                   className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
-                 >
-                   <ShoppingCart className="w-6 h-6 text-white" />
+                <Link
+                  to="/cart"
+                  className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                >
+                  <ShoppingCart className="w-6 h-6 text-white" />
                   {cartCount > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                      className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold z-10"
                     >
                       {cartCount}
                     </motion.span>
@@ -128,16 +128,16 @@ export default function Navbar() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                                 <Link 
-                   to="/wishlist" 
-                   className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
-                 >
-                   <Heart className="w-6 h-6 text-white" />
+                <Link
+                  to="/wishlist"
+                  className="relative p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                >
+                  <Heart className="w-6 h-6 text-white" />
                   {wishlistCount > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                      className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold z-10"
                     >
                       {wishlistCount}
                     </motion.span>
@@ -152,14 +152,14 @@ export default function Navbar() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setProfileOpen(!profileOpen)}
-                                         className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
-                   >
-                     <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                       <User className="w-4 h-4 text-white" />
-                     </div>
-                     <span className="text-white font-medium hidden lg:block">
-                       {userName || "User"}
-                     </span>
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+                  >
+                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-white font-medium hidden lg:block">
+                      {userName || "User"}
+                    </span>
                     {isAdmin && (
                       <Crown className="w-4 h-4 text-yellow-500" />
                     )}
@@ -191,35 +191,35 @@ export default function Navbar() {
 
                         {/* Menu Items */}
                         <div className="p-2">
-                          <Link 
-                            to="/account" 
+                          <Link
+                            to="/account"
                             onClick={() => setProfileOpen(false)}
                             className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
                           >
                             <Settings className="w-4 h-4" />
                             Account Details
                           </Link>
-                          
-                          <Link 
-                            to="/orders" 
+
+                          <Link
+                            to="/orders"
                             onClick={() => setProfileOpen(false)}
                             className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
                           >
                             <FileText className="w-4 h-4" />
                             Orders
                           </Link>
-                          
-                          <Link 
-                            to="/track-order" 
+
+                          <Link
+                            to="/track-order"
                             onClick={() => setProfileOpen(false)}
                             className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
                           >
                             <Truck className="w-4 h-4" />
                             Track Order
                           </Link>
-                          
-                          <Link 
-                            to="/help" 
+
+                          <Link
+                            to="/help"
                             onClick={() => setProfileOpen(false)}
                             className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700"
                           >
@@ -231,16 +231,16 @@ export default function Navbar() {
                           {isAdmin && (
                             <>
                               <div className="border-t border-gray-100 my-2"></div>
-                              <Link 
-                                to="/admin/dashboard" 
+                              <Link
+                                to="/admin/dashboard"
                                 onClick={() => setProfileOpen(false)}
                                 className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-yellow-50 transition-colors duration-200 text-yellow-700"
                               >
                                 <Crown className="w-4 h-4" />
                                 Admin Dashboard
                               </Link>
-                              <Link 
-                                to="/admin/create-product" 
+                              <Link
+                                to="/admin/create-product"
                                 onClick={() => setProfileOpen(false)}
                                 className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-yellow-50 transition-colors duration-200 text-yellow-700"
                               >
@@ -251,7 +251,7 @@ export default function Navbar() {
                           )}
 
                           <div className="border-t border-gray-100 my-2"></div>
-                          
+
                           <button
                             onClick={() => {
                               handleLogout();
@@ -272,12 +272,12 @@ export default function Navbar() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                                     <Link
-                     to="/login"
-                     className="px-6 py-2 bg-white/90 text-orange-700 rounded-xl font-semibold hover:bg-white transition-all duration-200 shadow-md hover:shadow-lg"
-                   >
-                     Sign In
-                   </Link>
+                  <Link
+                    to="/login"
+                    className="px-6 py-2 bg-white/90 text-orange-700 rounded-xl font-semibold hover:bg-white transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    Sign In
+                  </Link>
                 </motion.div>
               )}
             </div>
@@ -287,14 +287,14 @@ export default function Navbar() {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-                         className="md:hidden p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
+            className="md:hidden p-2 rounded-xl hover:bg-white/20 transition-colors duration-200"
             onClick={() => setIsOpen(!isOpen)}
           >
-                         {isOpen ? (
-               <X className="w-6 h-6 text-white" />
-             ) : (
-               <Menu className="w-6 h-6 text-white" />
-             )}
+            {isOpen ? (
+              <X className="w-6 h-6 text-white" />
+            ) : (
+              <Menu className="w-6 h-6 text-white" />
+            )}
           </motion.button>
         </div>
       </div>
@@ -346,8 +346,8 @@ export default function Navbar() {
               {/* Action Items */}
               <div className="border-t border-white/20 pt-4 space-y-4">
                 {/* Cart */}
-                <Link 
-                  to="/cart" 
+                <Link
+                  to="/cart"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-between px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                 >
@@ -356,15 +356,15 @@ export default function Navbar() {
                     <span className="font-medium">Cart</span>
                   </div>
                   {cartCount > 0 && (
-                    <span className="bg-orange-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[20px] text-center">
+                    <span className="bg-orange-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[24px] text-center z-10">
                       {cartCount}
                     </span>
                   )}
                 </Link>
 
                 {/* Wishlist */}
-                <Link 
-                  to="/wishlist" 
+                <Link
+                  to="/wishlist"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-between px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                 >
@@ -373,7 +373,7 @@ export default function Navbar() {
                     <span className="font-medium">Wishlist</span>
                   </div>
                   {wishlistCount > 0 && (
-                    <span className="bg-pink-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[20px] text-center">
+                    <span className="bg-pink-500 text-white text-xs rounded-full px-2 py-1 font-bold min-w-[24px] text-center z-10">
                       {wishlistCount}
                     </span>
                   )}
@@ -383,35 +383,35 @@ export default function Navbar() {
                 {isLoggedIn ? (
                   <>
                     <div className="border-t border-white/20 pt-3 space-y-1">
-                      <Link 
-                        to="/account" 
+                      <Link
+                        to="/account"
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                       >
                         <Settings className="w-5 h-5" />
                         <span className="font-medium">Account Details</span>
                       </Link>
-                      
-                      <Link 
-                        to="/orders" 
+
+                      <Link
+                        to="/orders"
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                       >
                         <FileText className="w-5 h-5" />
                         <span className="font-medium">Orders</span>
                       </Link>
-                      
-                      <Link 
-                        to="/track-order" 
+
+                      <Link
+                        to="/track-order"
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                       >
                         <Truck className="w-5 h-5" />
                         <span className="font-medium">Track Order</span>
                       </Link>
-                      
-                      <Link 
-                        to="/help" 
+
+                      <Link
+                        to="/help"
                         onClick={() => setIsOpen(false)}
                         className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-white"
                       >
@@ -423,16 +423,16 @@ export default function Navbar() {
                       {isAdmin && (
                         <>
                           <div className="border-t border-white/20 pt-3 space-y-1">
-                            <Link 
-                              to="/admin/dashboard" 
+                            <Link
+                              to="/admin/dashboard"
                               onClick={() => setIsOpen(false)}
                               className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
                             >
                               <Crown className="w-5 h-5" />
                               <span className="font-medium">Admin Dashboard</span>
                             </Link>
-                            <Link 
-                              to="/admin/create-product" 
+                            <Link
+                              to="/admin/create-product"
                               onClick={() => setIsOpen(false)}
                               className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-white/20 transition-colors duration-200 text-yellow-200"
                             >
