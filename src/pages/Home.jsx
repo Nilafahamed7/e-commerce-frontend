@@ -37,15 +37,21 @@ export default function Home() {
         
         const res = await axios.get(`${API_URL}/api/products`);
         
-        if (res.data && res.data.length > 0) {
+        console.log("API Response:", res.data); // Debug log
+        
+        // Check if res.data is an array
+        if (Array.isArray(res.data) && res.data.length > 0) {
           const shuffled = res.data.sort(() => 0.5 - Math.random());
           const featuredProducts = shuffled.slice(0, 3);
           const trendingProducts = shuffled.slice(3, 7);
           
           setFeatured(featuredProducts);
           setTrending(trendingProducts);
-        } else {
+        } else if (Array.isArray(res.data) && res.data.length === 0) {
           setError("No products available");
+        } else {
+          console.error("Unexpected API response format:", res.data);
+          setError("Invalid data format received from server");
         }
       } catch (err) {
         console.error("❌ Error fetching products:", err);

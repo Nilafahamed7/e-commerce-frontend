@@ -12,9 +12,18 @@ export default function AdminProducts() {
     try {
       const res = await fetch(`${API_URL}/api/products`);
       const data = await res.json();
-      setProducts(data);
+      console.log("Admin products data:", data); // Debug log
+      
+      // Check if data is an array
+      if (Array.isArray(data)) {
+        setProducts(data);
+      } else {
+        console.error("Unexpected API response format:", data);
+        setProducts([]); // Set empty array as fallback
+      }
     } catch (err) {
       console.error("Error fetching products:", err);
+      setProducts([]); // Set empty array as fallback
     } finally {
       setLoading(false);
     }

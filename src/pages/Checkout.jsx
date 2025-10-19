@@ -79,7 +79,7 @@ export default function Checkout() {
       const res = await axios.post(
         `${API_URL}/api/orders`,
         {
-          products: cart.items.map((item) => ({
+          products: (cart?.items || []).map((item) => ({
             productId: item.product?._id || item.productId,
             title: item.product?.name || "Product",
             price: item.product?.price || 0,
@@ -141,7 +141,7 @@ export default function Checkout() {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-                products: cart.items.map((item) => ({
+                products: (cart?.items || []).map((item) => ({
                   productId: item.product?._id || item.productId,
                   title: item.product?.name || "Product",
                   price: item.product?.price || 0,

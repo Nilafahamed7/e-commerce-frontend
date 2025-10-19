@@ -35,8 +35,15 @@ export default function Products() {
         setError(null);
         const res = await axios.get(`${API_URL}/api/products`);
         console.log("Products data:", res.data); // Debug: see what data we get
-        setProducts(res.data);
-        setFiltered(res.data);
+        
+        // Check if res.data is an array
+        if (Array.isArray(res.data)) {
+          setProducts(res.data);
+          setFiltered(res.data);
+        } else {
+          console.error("Unexpected API response format:", res.data);
+          setError("Invalid data format received from server");
+        }
       } catch (err) {
         console.error("Error fetching products:", err);
         setError("Failed to load products");
