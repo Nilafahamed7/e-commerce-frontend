@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const CartContext = createContext(null);
@@ -42,8 +42,7 @@ export function CartProvider({ children }) {
   }) => {
     const token = getToken();
     if (!token) throw new Error("Please login first");
-    await axios.post(
-      `${API}/cart/add`,
+    await axios.post(`${API}/cart/add`,
       { productId, quantity, size, color, customText, customImage },
       buildAuth()
     );

@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 export default function Checkout() {
+   const API_URL = import.meta.env.VITE_BACKEND_URL
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -43,7 +44,7 @@ export default function Checkout() {
         setLoading(true);
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "https://e-commerce-backend-production-fde7.up.railway.app/api/cart",
+          `${API_URL}/api/cart`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setCart(res.data);
@@ -76,7 +77,7 @@ export default function Checkout() {
       const token = localStorage.getItem("token");
 
       const res = await axios.post(
-        "https://e-commerce-backend-production-fde7.up.railway.app/api/orders",
+        `${API_URL}/api/orders`,
         {
           products: cart.items.map((item) => ({
             productId: item.product?._id || item.productId,
@@ -118,7 +119,7 @@ export default function Checkout() {
       const token = localStorage.getItem("token");
 
       const res = await axios.post(
-        "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/razorpay",
+        `${API_URL}/api/orders/razorpay`,
         { amount: finalTotal },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -135,7 +136,7 @@ export default function Checkout() {
         handler: async function (response) {
           try {
             await axios.post(
-              "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/verify",
+              `${API_URL}/api/orders/verify`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,

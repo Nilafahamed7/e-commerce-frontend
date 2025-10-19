@@ -4,6 +4,7 @@ import { Search, Package, Truck, CheckCircle, Clock, AlertCircle, MapPin, Calend
 import axios from "axios";
 
 export default function TrackOrder() {
+    const API_URL = import.meta.env.VITE_BACKEND_URL
   const [id, setId] = useState("");
   const [order, setOrder] = useState(null);
   const [error, setError] = useState("");
@@ -21,7 +22,7 @@ export default function TrackOrder() {
     
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`https://e-commerce-backend-production-fde7.up.railway.app/api/orders`, {
+      const res = await axios.get(`${API_URL}/api/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const found = (res.data || []).find((o) => o._id === id.trim());

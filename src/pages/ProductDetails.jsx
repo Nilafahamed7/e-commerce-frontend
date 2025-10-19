@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { FaArrowLeft, FaShoppingCart, FaHeart, FaStar, FaTruck, FaShieldAlt, FaUndo, FaCheck } from "react-icons/fa";
 
 export default function ProductDetails() {
+  const API_URL = import.meta.env.VITE_BACKEND_URL
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [size, setSize] = useState("");
@@ -28,7 +29,7 @@ export default function ProductDetails() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`https://e-commerce-backend-production-fde7.up.railway.app/api/products/${id}`);
+        const res = await axios.get(`${API_URL}/api/products/${id}`);
         setProduct(res.data);
       } catch (err) {
         console.error("Failed to fetch product:", err);
@@ -135,7 +136,7 @@ export default function ProductDetails() {
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <div className="space-y-4">
                 <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{product.name}</h1>
-                
+
                 {/* Rating */}
                 <div className="flex items-center gap-2">
                   <div className="flex text-yellow-400">
@@ -169,11 +170,10 @@ export default function ProductDetails() {
                       <button
                         key={s}
                         onClick={() => setSize(s)}
-                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[60px] text-center ${
-                          size === s
+                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[60px] text-center ${size === s
                             ? "border-orange-500 bg-orange-50 text-orange-700"
                             : "border-gray-200 hover:border-orange-300 text-gray-700"
-                        }`}
+                          }`}
                       >
                         {s}
                       </button>
@@ -189,11 +189,10 @@ export default function ProductDetails() {
                       <button
                         key={c}
                         onClick={() => setColor(c)}
-                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[80px] text-center ${
-                          color === c
+                        className={`py-3 px-6 rounded-lg border-2 font-medium transition-all duration-200 min-w-[80px] text-center ${color === c
                             ? "border-orange-500 bg-orange-50 text-orange-700"
                             : "border-gray-200 hover:border-orange-300 text-gray-700"
-                        }`}
+                          }`}
                       >
                         {c}
                       </button>
@@ -260,11 +259,10 @@ export default function ProductDetails() {
               whileTap={{ scale: 0.98 }}
               onClick={handleAddToCart}
               disabled={addingToCart || !size || !color}
-              className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
-                addingToCart || !size || !color
+              className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${addingToCart || !size || !color
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-gradient-to-r from-orange-500 to-amber-600 text-white hover:from-orange-600 hover:to-amber-700 shadow-lg hover:shadow-xl"
-              }`}
+                }`}
             >
               {addingToCart ? (
                 <>

@@ -4,6 +4,8 @@ import { User, Mail, Shield, Calendar, MapPin, Phone, Edit, Crown, Settings, Cre
 import axios from "axios";
 
 export default function Account() {
+  const API_URL = import.meta.env.VITE_BACKEND_URL
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -18,12 +20,12 @@ export default function Account() {
           return;
         }
 
-        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/auth/me", {
+        const res = await axios.get(`${API_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
       } catch (err) {
-        setError("Failed to load account information");
+        setError("Failed to load account information" + err.message);
       } finally {
         setLoading(false);
       }

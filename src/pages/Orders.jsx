@@ -20,6 +20,7 @@ import {
 } from "react-icons/fa";
 
 export default function Orders() {
+    const API_URL = import.meta.env.VITE_BACKEND_URL
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reordering, setReordering] = useState(false);
@@ -38,7 +39,7 @@ export default function Orders() {
         }
 
         const res = await axios.get(
-          "https://e-commerce-backend-production-fde7.up.railway.app/api/orders/myorders",
+          `${API_URL}/api/orders/myorders`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -68,7 +69,7 @@ export default function Orders() {
       await Promise.all(
         products.map((p) =>
           axios.post(
-            "https://e-commerce-backend-production-fde7.up.railway.app/api/cart/add",
+            `${API_URL}/api/cart/add`,
             {
               productId: p.productId?._id,
               quantity: p.quantity || 1,

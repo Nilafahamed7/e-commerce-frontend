@@ -3,19 +3,20 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { 
-  Mail, 
-  Lock, 
-  Eye, 
-  EyeOff, 
-  User, 
-  ArrowRight, 
-  Shield, 
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  User,
+  ArrowRight,
+  Shield,
   CheckCircle,
   Star
 } from "lucide-react";
 
 export default function Login() {
+  const API_URL = import.meta.env.VITE_BACKEND_URL
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,9 +28,9 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    
+
     try {
-      const res = await axios.post("https://e-commerce-backend-production-fde7.up.railway.app/api/auth/login", { email, password });
+      const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
 
       // Save token
       localStorage.setItem("token", res.data.token);
@@ -63,7 +64,7 @@ export default function Login() {
           transition={{ duration: 0.6 }}
           className="text-center lg:text-left"
         >
-                    <div className="mb-8">
+          <div className="mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -72,15 +73,15 @@ export default function Login() {
             >
               Welcome Back!
             </motion.h1>
-                
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-xl text-orange-700 mb-8"
-                >
-                  Sign in to your DesignMyFit account and continue your shopping journey
-                </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-xl text-orange-700 mb-8"
+            >
+              Sign in to your DesignMyFit account and continue your shopping journey
+            </motion.p>
           </div>
 
           {/* Features */}
@@ -129,7 +130,7 @@ export default function Login() {
                 >
                   <User className="w-8 h-8 text-white" />
                 </motion.div>
-                
+
                 <motion.h2
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -138,7 +139,7 @@ export default function Login() {
                 >
                   Sign In
                 </motion.h2>
-                
+
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -220,11 +221,10 @@ export default function Login() {
                   whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={loading}
-                  className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
-                    loading
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-gradient-to-r from-orange-500 to-amber-600 text-white hover:from-orange-600 hover:to-amber-700 shadow-lg hover:shadow-xl"
-                  }`}
+                  className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${loading
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-orange-500 to-amber-600 text-white hover:from-orange-600 hover:to-amber-700 shadow-lg hover:shadow-xl"
+                    }`}
                 >
                   {loading ? (
                     <>
@@ -256,8 +256,8 @@ export default function Login() {
               >
                 <p className="text-gray-600">
                   Don't have an account?{" "}
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="font-semibold text-orange-600 hover:text-orange-700 transition-colors duration-200"
                   >
                     Create Account

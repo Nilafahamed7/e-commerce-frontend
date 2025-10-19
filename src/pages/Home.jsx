@@ -8,6 +8,8 @@ import { FaInstagram, FaFacebook, FaWhatsapp, FaLock, FaTruck, FaUndo, FaCheckCi
 import hero from "../assets/hero.jpg";
 
 export default function Home() {
+   const API_URL = import.meta.env.VITE_BACKEND_URL
+
   const [featured, setFeatured] = useState([]);
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ export default function Home() {
         setLoading(true);
         setError(null);
         
-        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/products");
+        const res = await axios.get(`${API_URL}/api/products`);
         
         if (res.data && res.data.length > 0) {
           const shuffled = res.data.sort(() => 0.5 - Math.random());

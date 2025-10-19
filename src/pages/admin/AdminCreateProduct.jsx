@@ -6,8 +6,12 @@ import { motion } from "framer-motion";
 import { FaPlus, FaSpinner, FaCheck, FaExclamationTriangle } from "react-icons/fa";
 
 export default function AdminCreateProduct() {
+
+
+  const API_URL = import.meta.env.VITE_BACKEND_URL
+
   const [imageUrl, setImageUrl] = useState("");
-  const [imageUploading, setImageUploading] = useState(false);
+  // const [imageUploading, setImageUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -92,7 +96,7 @@ export default function AdminCreateProduct() {
       console.log("Creating product with data:", productData);
 
       const response = await axios.post(
-        "https://e-commerce-backend-production-fde7.up.railway.app/api/products",
+        `${API_URL}/api/products`,
         productData,
         {
           headers: { 

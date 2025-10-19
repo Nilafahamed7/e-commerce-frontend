@@ -5,11 +5,13 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
 
+  const API_URL = import.meta.env.VITE_BACKEND_URL
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const { data } = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/admin/dashboard", {
+        const { data } = await axios.get(`${API_URL}/api/admin/dashboard`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

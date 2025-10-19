@@ -7,6 +7,7 @@ import { useWishlist } from "../components/Context/WishlistContext";
 import { useCart } from "../components/Context/CartContext";
 
 export default function Products() {
+    const API_URL = import.meta.env.VITE_BACKEND_URL
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ export default function Products() {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get("https://e-commerce-backend-production-fde7.up.railway.app/api/products");
+        const res = await axios.get(`${API_URL}/api/products`);
         console.log("Products data:", res.data); // Debug: see what data we get
         setProducts(res.data);
         setFiltered(res.data);
@@ -352,26 +353,6 @@ export default function Products() {
                       >
                         <FaHeart />
                       </button>
-
-                      {/* Quick Actions Overlay - REMOVED TO FIX IMAGE DISPLAY */}
-                      {/* <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <button
-                            onClick={() => handleQuickAdd(product)}
-                            className="p-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition"
-                            title="Quick Add to Cart"
-                          >
-                            <FaShoppingCart />
-                          </button>
-                          <Link
-                            to={`/products/${product._id}`}
-                            className="p-2 bg-white text-gray-700 rounded-full hover:bg-gray-100 transition"
-                            title="View Details"
-                          >
-                            <FaEye />
-                          </Link>
-                        </div>
-                      </div> */}
                     </div>
 
                     {/* Product Info */}

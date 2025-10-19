@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function UploadImage({
   onUpload,
-  endpoint = "https://e-commerce-backend-production-fde7.up.railway.app/api/products/upload-image",
+  endpoint = "https://e-commerce-backend-ikj9.onrender.com/api/products/upload-image",
 }) {
   const [preview, setPreview] = useState("");
   const [uploading, setUploading] = useState(false);
