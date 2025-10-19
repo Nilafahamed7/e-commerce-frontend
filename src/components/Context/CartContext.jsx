@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const CartContext = createContext(null);
-const API = "https://e-commerce-backend-production-fde7.up.railway.app/api";
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
@@ -22,7 +22,7 @@ export function CartProvider({ children }) {
       return;
     }
     try {
-      const res = await axios.get(`${API}/cart`, buildAuth());
+      const res = await axios.get(`${API_URL}/api/cart`, buildAuth());
       const items = res.data?.items || []; // ✅ handles empty cart
       setCartItems(items);
       // setCartCount(items.length);
@@ -42,7 +42,7 @@ export function CartProvider({ children }) {
   }) => {
     const token = getToken();
     if (!token) throw new Error("Please login first");
-    await axios.post(`${API}/cart/add`,
+    await axios.post(`${API_URL}/api/cart/add`,
       { productId, quantity, size, color, customText, customImage },
       buildAuth()
     );
@@ -61,11 +61,11 @@ export function CartProvider({ children }) {
       }
       
       // Remove the current item
-      await axios.delete(`${API}/cart/${cartItemId}`, buildAuth());
+      await axios.delete(`${API_URL}/api/cart/${cartItemId}`, buildAuth());
       
       // Add it back with the new quantity
       await axios.post(
-        `${API}/cart/add`,
+        `${API_URL}/api/cart/add`,
         {
           productId: currentItem.product._id,
           quantity: quantity,
@@ -88,7 +88,7 @@ export function CartProvider({ children }) {
   const removeFromCart = async (cartItemId) => {
     const token = getToken();
     if (!token) return;
-    await axios.delete(`${API}/cart/${cartItemId}`, buildAuth()); // ✅ fixed URL
+    await axios.delete(`${API_URL}/api/cart/${cartItemId}`, buildAuth()); // ✅ fixed URL
     fetchCart(); // refresh after delete
   };
 
