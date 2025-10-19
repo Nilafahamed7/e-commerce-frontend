@@ -20,12 +20,26 @@ export default function Home() {
   const getImageUrl = (imageUrl) => {
     if (!imageUrl) return "/placeholder.svg";
     
-    // Convert .avif to .webp for better browser compatibility
-    if (imageUrl.includes('.avif')) {
-      return imageUrl.replace('.avif', '.webp');
+    // Ensure it's a valid URL
+    if (!imageUrl.startsWith('http')) {
+      return "/placeholder.svg";
     }
     
-    return imageUrl.startsWith('http') ? imageUrl : "/placeholder.svg";
+    // For Cloudinary URLs, try to get the best format
+    if (imageUrl.includes('cloudinary.com')) {
+      // Try to get JPEG format for maximum browser compatibility
+      if (imageUrl.includes('.avif')) {
+        const jpegUrl = imageUrl.replace('.avif', '.jpg');
+        console.log("🔄 Converting AVIF to JPEG:", imageUrl, "→", jpegUrl);
+        return jpegUrl;
+      }
+      // If it's already JPEG or other format, use as-is
+      console.log("📷 Using Cloudinary URL:", imageUrl);
+      return imageUrl;
+    }
+    
+    console.log("📷 Using original image URL:", imageUrl);
+    return imageUrl;
   };
 
   // Fetch products for featured & trending
@@ -41,9 +55,14 @@ export default function Home() {
         
         // Check if res.data is an array
         if (Array.isArray(res.data) && res.data.length > 0) {
+          console.log("✅ Products loaded:", res.data.length, "items");
+          console.log("📷 First product image URL:", res.data[0]?.imageUrl);
           const shuffled = res.data.sort(() => 0.5 - Math.random());
           const featuredProducts = shuffled.slice(0, 3);
           const trendingProducts = shuffled.slice(3, 7);
+          
+          console.log("🎯 Featured products:", featuredProducts.length);
+          console.log("🔥 Trending products:", trendingProducts.length);
           
           setFeatured(featuredProducts);
           setTrending(trendingProducts);
@@ -258,7 +277,9 @@ export default function Home() {
                       src={getImageUrl(p.imageUrl)}
                       alt={p.name}
                       className="h-48 sm:h-56 w-full object-cover rounded-md group-hover:scale-105 transition"
+                      onLoad={() => console.log("✅ Featured image loaded:", getImageUrl(p.imageUrl))}
                       onError={(e) => {
+                        console.error("❌ Featured image failed to load:", getImageUrl(p.imageUrl));
                         e.target.onerror = null;
                         e.target.src = "/placeholder.svg";
                       }}
@@ -456,7 +477,9 @@ export default function Home() {
                       src={getImageUrl(p.imageUrl)}
                       alt={p.name}
                       className="h-48 sm:h-56 w-full object-cover rounded-md group-hover:scale-105 transition"
+                      onLoad={() => console.log("✅ Trending image loaded:", getImageUrl(p.imageUrl))}
                       onError={(e) => {
+                        console.error("❌ Trending image failed to load:", getImageUrl(p.imageUrl));
                         e.target.onerror = null;
                         e.target.src = "/placeholder.svg";
                       }}

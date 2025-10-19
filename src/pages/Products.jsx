@@ -38,6 +38,8 @@ export default function Products() {
         
         // Check if res.data is an array
         if (Array.isArray(res.data)) {
+          console.log("✅ Products loaded:", res.data.length, "items");
+          console.log("📷 First product image URL:", res.data[0]?.imageUrl);
           setProducts(res.data);
           setFiltered(res.data);
         } else {
@@ -58,13 +60,26 @@ export default function Products() {
   const getImageUrl = (url) => {
     if (!url) return "/placeholder.svg"; // fallback image
     
-    // Convert Cloudinary URLs to webp format for better browser support
-    let processedUrl = url;
-    if (url.includes('cloudinary.com') && url.includes('.avif')) {
-      processedUrl = url.replace('.avif', '.webp');
+    // Ensure it's a valid URL
+    if (!url.startsWith('http')) {
+      return "/placeholder.svg";
     }
     
-    return processedUrl; // Cloudinary URLs already start with https
+    // For Cloudinary URLs, try to get the best format
+    if (url.includes('cloudinary.com')) {
+      // Try to get JPEG format for maximum browser compatibility
+      if (url.includes('.avif')) {
+        const jpegUrl = url.replace('.avif', '.jpg');
+        console.log("🔄 Converting AVIF to JPEG:", url, "→", jpegUrl);
+        return jpegUrl;
+      }
+      // If it's already JPEG or other format, use as-is
+      console.log("📷 Using Cloudinary URL:", url);
+      return url;
+    }
+    
+    console.log("📷 Using original image URL:", url);
+    return url;
   };
 
   // filter logic
@@ -345,6 +360,12 @@ export default function Products() {
                         src={getImageUrl(product.imageUrl)}
                         alt={product.name}
                         className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                        onLoad={() => console.log("✅ Product image loaded:", getImageUrl(product.imageUrl))}
+                        onError={(e) => {
+                          console.error("❌ Product image failed to load:", getImageUrl(product.imageUrl));
+                          e.target.onerror = null;
+                          e.target.src = "/placeholder.svg";
+                        }}
                       />
                       
                       {/* Wishlist Button */}
